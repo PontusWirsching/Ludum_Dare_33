@@ -39,6 +39,11 @@ function create() {
     GameEntityParser.BuildPlayerEntityMenu(game);    
 
     setCurrentLevel("level_01");
+
+    console.log(PlayerUnits);
+
+
+
 }
 
 function BuildLevel(){
@@ -52,7 +57,25 @@ function BuildLevel(){
     }
 }
 
+var timer = 0;
+
 function update() {
-    if (currentLevel != null)
+    if (currentLevel != null){
+
+        timer += 1;
+        if (timer >= 30) {
+
+
+
+
+            currentLevel.addEntity(game.add.sprite(-40 + GameSettings.TileSize * GameSettings.LevelWidth, -40 + currentLevel.lanes[Math.floor(Math.random() * currentLevel.lanes.length)] + currentLevel.laneOffset, "Goblin", "Walk_000.png"));
+            timer = 0;
+        }
+
         currentLevel.update();
+    }
+
+
+
+
 }
