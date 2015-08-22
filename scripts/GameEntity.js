@@ -2,6 +2,7 @@ function GameEntity(game, spriteSheet){
     Phaser.Sprite.call(this, game, 0, 0, spriteSheet, 'Walk0.png');
     this.name = "";
     this.cost = 0;
+    this.size = GameTypes.Sizes.Small;
     this.faction = GameTypes.Faction.None;
     this.movementSpeed = GameTypes.Speeds.None;
     this.attackSpeed = GameTypes.Speeds.None;

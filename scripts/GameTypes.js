@@ -29,3 +29,8 @@ GameTypes.RunningDirections = {
     Left:0,
     Right:1
 }
+GameTypes.Sizes = {
+    Small:0, //1x1
+    Medium:1, //1x2
+    Large:2 //2x2
+}
