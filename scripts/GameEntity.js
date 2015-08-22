@@ -10,6 +10,8 @@ function GameEntity(game, spriteSheet){
     this.advantageTo = [];
     this.disadvantageTo = [];
     
+    this.test = "";
+    
     this.runningDirection = GameTypes.RunningDirections.None;
     
     this.create = function(){
