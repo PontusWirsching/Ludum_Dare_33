@@ -9,7 +9,9 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 81,
+        height: 81
     },
     KoboldSap : {
         Name: "KoboldSap",
@@ -21,7 +23,9 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 81,
+        height: 81
     },
     Goblin : {
         Name: "Goblin",
@@ -33,7 +37,9 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 81,
+        height: 81
     },
     OrcSpearThrower : {
         Name: "OrcSpearThrower",
@@ -45,7 +51,9 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 81,
+        height: 81
     },
     MossGolem : {
         Name: "MossGolem",
@@ -57,7 +65,9 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 201,
+        height: 201
     },
     RockQuarry : {
         Name: "RockQuarry",
@@ -69,6 +79,8 @@ PlayerUnits = {
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
-        DisadvantageTo: []
+        DisadvantageTo: [],
+        width: 201,
+        height: 201
     }
 };

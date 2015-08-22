@@ -40,7 +40,6 @@ function create() {
 
     setCurrentLevel("level_01");
 
-    console.log(PlayerUnits);
 
 
 
@@ -63,12 +62,17 @@ function update() {
     if (currentLevel != null){
 
         timer += 1;
-        if (timer >= 30) {
+        if (timer >= 60) {
+            var type = PlayerUnits.Goblin;
+            var lane = Math.round(Math.random() * currentLevel.lanes.length);
+            var x = 800;
+            var y = currentLevel.lanes[lane] + currentLevel.laneOffset;
+           
 
+           
 
+            currentLevel.addEntity(new Entity(x, y, type));
 
-
-            currentLevel.addEntity(game.add.sprite(-40 + GameSettings.TileSize * GameSettings.LevelWidth, -40 + currentLevel.lanes[Math.floor(Math.random() * currentLevel.lanes.length)] + currentLevel.laneOffset, "Goblin", "Walk_000.png"));
             timer = 0;
         }
 
