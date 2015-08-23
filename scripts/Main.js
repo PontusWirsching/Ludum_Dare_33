@@ -1,6 +1,4 @@
-var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
-
+var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
 var levels = []; // Array of levels.
 var currentLevel; // The level to currently be updated.
@@ -36,7 +34,8 @@ function create() {
     
     
     //BuildLevel();
-    GameEntityParser.BuildPlayerEntityMenu(game);    
+    entityParser = new GameEntityParser();
+    entityParser.BuildPlayerEntityMenu(game);
 
     setCurrentLevel("level_01");
 
@@ -60,6 +59,8 @@ function BuildLevel(){
 var timer = 0;
 
 function update() {
+    entityParser.GetCurrentlySelectedUnit();
+    
     if (currentLevel != null){
 
         timer += 1;
@@ -78,4 +79,11 @@ function update() {
 
 
 
+}
+
+function render(){
+    game.debug.text("currentPlayerSelection : " + entityParser.currentlySelected, 2, 32, "#00ff00");
+    for(var i=0;i<entityParser.units.length;i++){
+        game.debug.body(entityParser.units[i]);
+    }
 }
