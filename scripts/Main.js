@@ -32,12 +32,12 @@ function preload() {
 
     game.load.image('level_01_rocks', 'assets/Rocks.png');
 
-    game.load.spritesheet('KoboldRunner_Walk', 'assets/KoboldRunner_Walk.png', 81, 81);
-    game.load.spritesheet('KoboldSap_Walk', 'assets/KoboldSap_Walk.png', 81, 81);
-    game.load.spritesheet('Goblin_Walk', 'assets/Goblin_Walk.png', 81, 81);
-    game.load.spritesheet('OrcSpearThrower_Walk', 'assets/OrcSpearThrower_Walk.png', 81, 81);
-    game.load.spritesheet('MossGolem_Walk', 'assets/MossGolem_Walk.png', 201, 201);
-    game.load.spritesheet('RockQuarry_Walk', 'assets/RockQuarry_Walk.png', 201, 201);
+    game.load.spritesheet('KoboldRunner_Walk', 'assets/Entities/KoboldRunner_Walk.png', 81, 81);
+    game.load.spritesheet('KoboldSap_Walk', 'assets/Entities/KoboldSap_Walk.png', 81, 81);
+    game.load.spritesheet('Goblin_Walk', 'assets/Entities/Goblin_Walk.png', 81, 81);
+    game.load.spritesheet('OrcSpearThrower_Walk', 'assets/Entities/OrcSpearThrower_Walk.png', 81, 81);
+    game.load.spritesheet('MossGolem_Walk', 'assets/Entities/MossGolem_Walk.png', 201, 201);
+    game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
 
 
     Resources.Load(game);
@@ -59,7 +59,7 @@ function create() {
 
     setCurrentLevel("level_01");
 
-    game.add.sprite(0, 0, 'gui');
+    gui = game.add.sprite(0, 0, 'gui');
 
 
 
@@ -116,6 +116,7 @@ function update() {
             currentLevel.addEntity(new Entity(x, y, type, game, lane));
 
             game.world.bringToTop(currentLevel.tree_tops);
+            game.world.bringToTop(gui);
 
             timer = 0;
         }
