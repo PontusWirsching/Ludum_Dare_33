@@ -41,17 +41,11 @@ function create() {
     
     
     //BuildLevel();
-<<<<<<< HEAD
+
     entityParser = new GameEntityParser();
     entityParser.BuildPlayerEntityMenu(game);
-=======
-    //GameEntityParser.BuildPlayerEntityMenu(game);    
->>>>>>> origin/master
 
     setCurrentLevel("level_01");
-
-
-
 
 }
 
