@@ -23,8 +23,9 @@ function setCurrentLevel(name) {
 function preload() {
 
 
+    game.load.image('gui', 'assets/GUI/GUI.png');
 
-    game.load.image('grassTile', 'assets/GrassTile.png');
+
     game.load.image('level_01', 'assets/Level1.png');
     game.load.image('level_01_tree_tops', 'assets/Tree_Tops.png');
     game.load.image('level_01_tree_bottoms', 'assets/Tree_Bottoms.png');
@@ -55,7 +56,11 @@ function create() {
     overlay = game.add.bitmapData(game.width, game.height);
     game.add.sprite(0, 0, overlay);
 
+
     setCurrentLevel("level_01");
+
+    game.add.sprite(0, 0, 'gui');
+
 
 
 
