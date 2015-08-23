@@ -26,6 +26,13 @@ function preload() {
     game.load.image('grassTile', 'assets/GrassTile.png');
     game.load.image('level_01', 'assets/Level1.png');
 
+    game.load.spritesheet('KoboldRunner_Walk', 'assets/KoboldRunner_Walk.png', 81, 81);
+    game.load.spritesheet('KoboldSap_Walk', 'assets/KoboldSap_Walk.png', 81, 81);
+    game.load.spritesheet('Goblin_Walk', 'assets/Goblin_Walk.png', 81, 81);
+    game.load.spritesheet('OrcSpearThrower_Walk', 'assets/OrcSpearThrower_Walk.png', 81, 81);
+    game.load.spritesheet('MossGolem_Walk', 'assets/MossGolem_Walk.png', 201, 201);
+    game.load.spritesheet('RockQuarry_Walk', 'assets/RockQuarry_Walk.png', 201, 201);
+
     Resources.Load(game);
 }
 
@@ -36,7 +43,7 @@ function create() {
     
     
     //BuildLevel();
-    GameEntityParser.BuildPlayerEntityMenu(game);    
+    //GameEntityParser.BuildPlayerEntityMenu(game);    
 
     setCurrentLevel("level_01");
 
@@ -63,12 +70,35 @@ function update() {
 
         timer += 1;
         if (timer >= 60) {
-            var type = PlayerUnits.Goblin;
-            var lane = Math.round(Math.random() * currentLevel.lanes.length);
-            var x = 800;
-            var y = currentLevel.lanes[lane] + currentLevel.laneOffset;
-           
 
+
+            var type = PlayerUnits.Goblin;
+            var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
+            var x = 800;
+            var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
+           
+            var r = Math.round(Math.random() * 5);
+
+            switch(r) {
+                case 0:
+                    type = PlayerUnits.Goblin;
+                    break;
+                case 1:
+                    type = PlayerUnits.MossGolem;
+                    break;
+                case 2:
+                    type = PlayerUnits.RockQuarry;
+                    break;
+                case 3:
+                    type = PlayerUnits.OrcSpearThrower;
+                    break;
+                case 4:
+                    type = PlayerUnits.KoboldSap;
+                    break;
+                case 5:
+                    type = PlayerUnits.KoboldRunner;
+                    break;
+            }
            
 
             currentLevel.addEntity(new Entity(x, y, type));

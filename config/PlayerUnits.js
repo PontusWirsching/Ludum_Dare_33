@@ -11,7 +11,9 @@ PlayerUnits = {
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 81,
-        height: 81
+        height: 81,
+        xOffset: 0,
+        yOffset: 0
     },
     KoboldSap : {
         Name: "KoboldSap",
@@ -25,62 +27,72 @@ PlayerUnits = {
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 81,
-        height: 81
+        height: 81,
+        xOffset: 0,
+        yOffset: 0
     },
     Goblin : {
         Name: "Goblin",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Player,
-        MovementSpeed: GameTypes.Speeds.Fast,
+        MovementSpeed: GameTypes.Speeds.Medium,
         AttackSpeed: GameTypes.Speeds.Medium,
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 81,
-        height: 81
+        height: 81,
+        xOffset: 0,
+        yOffset: 0
     },
     OrcSpearThrower : {
         Name: "OrcSpearThrower",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Player,
-        MovementSpeed: GameTypes.Speeds.Fast,
+        MovementSpeed: GameTypes.Speeds.Medium,
         AttackSpeed: GameTypes.Speeds.Medium,
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 81,
-        height: 81
+        height: 81,
+        xOffset: 0,
+        yOffset: 0
     },
     MossGolem : {
         Name: "MossGolem",
         Cost: 10,
         Size: GameTypes.Sizes.Medium,
         Faction: GameTypes.Faction.Player,
-        MovementSpeed: GameTypes.Speeds.Fast,
+        MovementSpeed: GameTypes.Speeds.Slow,
         AttackSpeed: GameTypes.Speeds.Medium,
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 201,
-        height: 201
+        height: 201,
+        xOffset: 0,
+        yOffset: -40
     },
     RockQuarry : {
         Name: "RockQuarry",
         Cost: 10,
         Size: GameTypes.Sizes.Large,
         Faction: GameTypes.Faction.Player,
-        MovementSpeed: GameTypes.Speeds.Fast,
+        MovementSpeed: GameTypes.Speeds.Slow,
         AttackSpeed: GameTypes.Speeds.Medium,
         ArmorTypes: GameTypes.ArmorTypes.Light,
         AttackTypes: [GameTypes.AttackTypes.Melee],
         AdvantageTo: [],
         DisadvantageTo: [],
         width: 201,
-        height: 201
+        height: 201,
+        xOffset: 0,
+        yOffset: -14
     }
 };
