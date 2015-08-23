@@ -39,31 +39,29 @@ function create() {
     
     addLevel(new Level(game, "level_01"));
     
-    
-    //BuildLevel();
 
     entityParser = new GameEntityParser();
     entityParser.BuildPlayerEntityMenu(game);
+    currentlySelected = 0;
+    
+    overlay = game.add.bitmapData(game.width, game.height);
+    game.add.sprite(0, 0, overlay);
 
     setCurrentLevel("level_01");
 
 }
 
-function BuildLevel(){
-        
-    
-    
-    for(var x = GameSettings.LevelWidthStart;x < GameSettings.LevelWidth; x++){
-        for(var y = GameSettings.LevelHeightStart; y < GameSettings.LevelHeight; y++){
-            //this.grassTile = game.add.sprite(x * 32, y * 32, 'grassTile');
-        }
-    }
-}
-
 var timer = 0;
 
 function update() {
-    entityParser.GetCurrentlySelectedUnit();
+    for(var i=0;i<entityParser.units.length;i++){
+        if(game.input.activePointer.isDown){
+            if(entityParser.units[i].OverlapsWith(game.input.mouse.input.x, game.input.mouse.input.y)){
+                currentlySelected = entityParser.units[i].type;
+                DrawRectangle(entityParser.units[i].x, entityParser.units[i].y, GameSettings.TileSize, GameSettings.TileSize);
+            }
+        }
+    }
     
     if (currentLevel != null){
 
@@ -76,7 +74,7 @@ function update() {
             var x = 800;
             var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
            
-            var r = Math.round(Math.random() * 5);
+            var r = currentlySelected; //Math.round(Math.random() * 5);
 
             switch(r) {
                 case 0:
@@ -107,15 +105,16 @@ function update() {
 
         currentLevel.update();
     }
+}
 
-
-
-
+function DrawRectangle(x, y, w, h){
+    overlay.clear();
+    overlay.ctx.beginPath();
+    overlay.ctx.rect(x, y, w, h);
+    overlay.ctx.strokeStyle = '#00ff00';
+    overlay.ctx.stroke();
 }
 
 function render(){
     game.debug.text("currentPlayerSelection : " + entityParser.currentlySelected, 2, 32, "#00ff00");
-    for(var i=0;i<entityParser.units.length;i++){
-        game.debug.body(entityParser.units[i]);
-    }
 }

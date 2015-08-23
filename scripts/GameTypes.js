@@ -34,3 +34,11 @@ GameTypes.Sizes = {
     Medium:1, //1x2
     Large:2 //2x2
 }
+GameTypes.PlayerUnits = {
+    Goblin:0,
+    MossGolem:1,
+    RockQuarry:2,
+    OrcSpearThrower:3,
+    KoboldSap:4,
+    KoboldRunner:5
+}

@@ -1,6 +1,5 @@
 function GameEntityParser(game){
     this.units = [];
-    this.currentlySelected = "";
     this.GetEntity = function(entityName){
         for(var playerUnit in PlayerUnits){
             if(playerUnit.Name == entityName){
@@ -29,18 +28,42 @@ function GameEntityParser(game){
                                        row * GameSettings.TileSize + GameSettings.TileSize / 2, 
                                        PlayerUnits[playerUnit].Name, 'Walk_000.png');   
             unit.anchor.setTo(0.5, 0.5);
-            unit.inputEnabled = true;
-            game.physics.arcade.enable(unit);
-            unit.body.setSize(32, 32, 0, 0);
-            this.units.push(unit);
+            this.units.push(new Unit(column * GameSettings.TileSize,
+                                     row * GameSettings.TileSize, 
+                                     GetPlayerUnitIndexFromName(PlayerUnits[playerUnit].Name)));
             column++;
         }
     }
+}
+
+function GetPlayerUnitIndexFromName(playerUnitName){
+    switch(playerUnitName){
+        case "KoboldRunner":
+            return GameTypes.PlayerUnits.KoboldRunner;
+        case "KoboldSap":
+            return GameTypes.PlayerUnits.KoboldSap;
+        case "Goblin":
+            return GameTypes.PlayerUnits.Goblin;
+        case "OrcSpearThrower":
+            return GameTypes.PlayerUnits.OrcSpearThrower;
+        case "MossGolem":
+            return GameTypes.PlayerUnits.MossGolem;
+        case "RockQuarry":
+            return GameTypes.PlayerUnits.RockQuarry;
+    }
+}
+
+function Unit(x, y, type){
+    this.x = x;
+    this.y = y;
+    this.type = type;
     
-    this.GetCurrentlySelectedUnit = function(){
-        for(var i=0;i < this.units.length; i++){
-            if(this.units[i].input.pointerDown())
-                this.currentlySelected = this.units[i].key;
+    this.OverlapsWith = function(mouseX, mouseY){
+        if(mouseX > this.x && mouseX < this.x + GameSettings.TileSize &&
+           mouseY > this.y && mouseY < this.y + GameSettings.TileSize){
+            return true;
         }
+        
+        return false;
     }
 }
