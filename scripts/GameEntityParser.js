@@ -30,7 +30,8 @@ function GameEntityParser(game){
             unit.anchor.setTo(0.5, 0.5);
             this.units.push(new Unit(column * GameSettings.TileSize,
                                      row * GameSettings.TileSize, 
-                                     GetPlayerUnitIndexFromName(PlayerUnits[playerUnit].Name)));
+                                     GetPlayerUnitIndexFromName(PlayerUnits[playerUnit].Name),
+                                     PlayerUnits[playerUnit].Size));
             column++;
         }
     }
@@ -53,17 +54,9 @@ function GetPlayerUnitIndexFromName(playerUnitName){
     }
 }
 
-function Unit(x, y, type){
+function Unit(x, y, type, size){
     this.x = x;
     this.y = y;
     this.type = type;
-    
-    this.OverlapsWith = function(mouseX, mouseY){
-        if(mouseX > this.x && mouseX < this.x + GameSettings.TileSize &&
-           mouseY > this.y && mouseY < this.y + GameSettings.TileSize){
-            return true;
-        }
-        
-        return false;
-    }
+    this.size = size;
 }

@@ -17,9 +17,6 @@ function setCurrentLevel(name) {
     }
 }
 
-
-
-
 function preload() {
     game.load.image('grassTile', 'assets/GrassTile.png');
     game.load.image('level_01', 'assets/Level1.png');
@@ -49,22 +46,39 @@ function create() {
     
     overlay = game.add.bitmapData(game.width, game.height);
     game.add.sprite(0, 0, overlay);
+    overlayLocations = GetOverlayLocations();
 
     setCurrentLevel("level_01");
+}
 
+function GetOverlayLocations(){
+    var overlayLocations = [
+        new OverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
+        new OverlayLocation(700, 155, 32, 53, GameTypes.PlayerUnits.MossGolem),
+        new OverlayLocation(685, 205, 64, 35, GameTypes.PlayerUnits.RockQuarry),
+        new OverlayLocation(732, 125, 32, 32, GameTypes.PlayerUnits.OrcSpearThrower),
+        new OverlayLocation(732, 95, 32, 32, GameTypes.PlayerUnits.KoboldSap),
+        new OverlayLocation(700, 95, 32, 32, GameTypes.PlayerUnits.KoboldRunner),
+    ];
+    
+    
+    return overlayLocations;
 }
 
 var timer = 0;
 
-function update() {
-    for(var i=0;i<entityParser.units.length;i++){
+function update() { 
+    for(var i=0;i<overlayLocations.length;i++){
         if(game.input.activePointer.isDown){
-            if(entityParser.units[i].OverlapsWith(game.input.mouse.input.x, game.input.mouse.input.y)){
-                currentlySelected = entityParser.units[i].type;
-                DrawRectangle(entityParser.units[i].x, entityParser.units[i].y, GameSettings.TileSize, GameSettings.TileSize);
+            if(MouseOverlapsLocation(overlayLocations[i],
+                                     game.input.mouse.input.x,
+                                     game.input.mouse.input.y)){
+                currentlySelected = overlayLocations[i].unit;
             }
         }
     }
+    
+    SetCurrentSelectionBox(currentlySelected);
     
     if (currentLevel != null){
 
@@ -80,22 +94,22 @@ function update() {
             var r = currentlySelected; //Math.round(Math.random() * 5);
 
             switch(r) {
-                case 0:
+                case GameTypes.PlayerUnits.Goblin:
                     type = PlayerUnits.Goblin;
                     break;
-                case 1:
+                case GameTypes.PlayerUnits.MossGolem:
                     type = PlayerUnits.MossGolem;
                     break;
-                case 2:
+                case GameTypes.PlayerUnits.RockQuarry:
                     type = PlayerUnits.RockQuarry;
                     break;
-                case 3:
+                case GameTypes.PlayerUnits.OrcSpearThrower:
                     type = PlayerUnits.OrcSpearThrower;
                     break;
-                case 4:
+                case GameTypes.PlayerUnits.KoboldSap:
                     type = PlayerUnits.KoboldSap;
                     break;
-                case 5:
+                case GameTypes.PlayerUnits.KoboldRunner:
                     type = PlayerUnits.KoboldRunner;
                     break;
             }
@@ -111,12 +125,37 @@ function update() {
     }
 }
 
+function SetCurrentSelectionBox(currentlySelected){
+    for(var i=0;i<overlayLocations.length;i++){
+        var overlayLocation = overlayLocations[i];
+        if(overlayLocation.unit == currentlySelected){
+            DrawRectangle(overlayLocation.x,
+                          overlayLocation.y,
+                          overlayLocation.width,
+                          overlayLocation.height);
+        }
+    }
+}
+
 function DrawRectangle(x, y, w, h){
     overlay.clear();
     overlay.ctx.beginPath();
     overlay.ctx.rect(x, y, w, h);
     overlay.ctx.strokeStyle = '#00ff00';
     overlay.ctx.stroke();
+}
+
+function MouseOverlapsLocation(overlayLocation, mouseX, mouseY){
+    return (mouseX > overlayLocation.x && mouseX < overlayLocation.x + overlayLocation.width &&
+            mouseY > overlayLocation.y && mouseY < overlayLocation.y + overlayLocation.height);
+}
+
+function OverlayLocation(x, y, w, h, unit){
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+    this.unit = unit;
 }
 
 function render(){
