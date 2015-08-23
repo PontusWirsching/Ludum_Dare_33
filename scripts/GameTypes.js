@@ -7,9 +7,9 @@ GameTypes.Faction = {
 
 GameTypes.Speeds = {
     None:-1,
-    Slow:0,
+    Slow:0.5,
     Medium:1,
-    Fast:2
+    Fast:1.8
 }
 GameTypes.ArmorTypes = {
     None:-1,

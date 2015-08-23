@@ -41,7 +41,14 @@ function Level(game, name) {
             var entity = this.entities[i];
             if (entity == null) continue;
 
-            entity.x--;
+            entity.x -= entity.type.MovementSpeed;
+
+            entity.update();
+
+            if (entity.x < 100) {
+                entity.sprite.kill();
+                this.entities.splice(i, 1);
+            }
 
         }
     }
