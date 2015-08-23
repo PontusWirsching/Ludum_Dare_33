@@ -32,8 +32,8 @@ function Level(game, name) {
     /* Builds the level with the right background image and settings. */
     this.build = function() {
         this.background = this.game.add.sprite(0, 0, this.name);
-        this.tree_bottoms = this.game.add.sprite(128 + 48, 64, this.name + '_tree_bottoms');
-        this.tree_tops = this.game.add.sprite(128 + 48, 32 + 8 + 5, this.name + '_tree_tops');
+        this.tree_bottoms = this.game.add.sprite(128 + 48 + 32, 64 + 64, this.name + '_tree_bottoms');
+        this.tree_tops = this.game.add.sprite(128 + 48 + 32, 64 + 32 + 8 + 5, this.name + '_tree_tops');
 
     }
     
@@ -43,8 +43,6 @@ function Level(game, name) {
             if (i >= this.entities.length) break;
             var entity = this.entities[i];
             if (entity == null) continue;
-
-            entity.x -= entity.type.MovementSpeed;
 
             entity.update();
 

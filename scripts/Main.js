@@ -20,6 +20,8 @@ function setCurrentLevel(name) {
 
 
 
+
+
 function preload() {
 
 
@@ -38,6 +40,12 @@ function preload() {
     game.load.spritesheet('OrcSpearThrower_Walk', 'assets/Entities/OrcSpearThrower_Walk.png', 81, 81);
     game.load.spritesheet('MossGolem_Walk', 'assets/Entities/MossGolem_Walk.png', 201, 201);
     game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
+
+
+    /* AI Units loading: */
+    game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
+
+
 
 
     Resources.Load(game);
@@ -61,6 +69,7 @@ function create() {
 
     gui = game.add.sprite(0, 0, 'gui');
 
+    game.ai = new AI(game);
 
 
 
@@ -79,6 +88,11 @@ function update() {
     }
     
     if (currentLevel != null){
+
+
+        if (game.ai != null) {
+            game.ai.update(currentLevel);
+        }
 
         timer += 1;
         if (timer >= 60) {
@@ -113,7 +127,7 @@ function update() {
             }
            
 
-            currentLevel.addEntity(new Entity(x, y, type, game, lane));
+            currentLevel.addEntity(new Entity(x, y, type, game));
 
             game.world.bringToTop(currentLevel.tree_tops);
             game.world.bringToTop(gui);
