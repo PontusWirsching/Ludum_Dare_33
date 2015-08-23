@@ -1,7 +1,7 @@
 
 /* This will be entities that are in-game. */
 /* The 'type' is an object from PlayerUnits. */
-function Entity(x, y, type, game) {
+function Entity(x, y, type, game, lane) {
 	
 	this.width = type.width;
 	this.height = type.height;
@@ -14,14 +14,16 @@ function Entity(x, y, type, game) {
 
 	if (type.Name == "MossGolem")
 		animFPS = 8;
+	if (type.Name == "OrcSpearThrower")
+		animFPS = 24;
 
-	this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
-	this.walk = this.sprite.animations.add('walk');
-	this.sprite.animations.play('walk', animFPS, true);
-	game.pontus.entityGroup.add(this.sprite);
+	if (this.sprite == null) {
+		this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
+		this.walk = this.sprite.animations.add('walk');
+		this.sprite.animations.play('walk', animFPS, true);
+	}
 
-	//this.sprite = game.add.sprite(this.x, this.y, type.Name, "Walk_000.png");
-	
+
 
 	
 

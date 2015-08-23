@@ -32,6 +32,9 @@ function Level(game, name) {
     /* Builds the level with the right background image and settings. */
     this.build = function() {
         this.background = this.game.add.sprite(0, 0, this.name);
+        this.tree_bottoms = this.game.add.sprite(128 + 48, 64, this.name + '_tree_bottoms');
+        this.tree_tops = this.game.add.sprite(128 + 48, 32 + 8 + 5, this.name + '_tree_tops');
+
     }
     
     /* Updates all of the entities. */
@@ -45,10 +48,15 @@ function Level(game, name) {
 
             entity.update();
 
-            if (entity.x < 100) {
-                entity.sprite.kill();
-                this.entities.splice(i, 1);
-            }
+            //this.game.debug.spriteBounds(entity.sprite);
+
+            if (entity.type.type == "monster")
+                if (entity.x < 100) {
+                    entity.sprite.kill();
+                    this.entities.splice(i, 1);
+                }
+
+            
 
         }
     }

@@ -21,8 +21,15 @@ function setCurrentLevel(name) {
 
 
 function preload() {
+
+
+
     game.load.image('grassTile', 'assets/GrassTile.png');
     game.load.image('level_01', 'assets/Level1.png');
+    game.load.image('level_01_tree_tops', 'assets/Tree_Tops.png');
+    game.load.image('level_01_tree_bottoms', 'assets/Tree_Bottoms.png');
+
+    game.load.image('level_01_rocks', 'assets/Rocks.png');
 
     game.load.spritesheet('KoboldRunner_Walk', 'assets/KoboldRunner_Walk.png', 81, 81);
     game.load.spritesheet('KoboldSap_Walk', 'assets/KoboldSap_Walk.png', 81, 81);
@@ -31,8 +38,6 @@ function preload() {
     game.load.spritesheet('MossGolem_Walk', 'assets/MossGolem_Walk.png', 201, 201);
     game.load.spritesheet('RockQuarry_Walk', 'assets/RockQuarry_Walk.png', 201, 201);
 
-    game.pontus = {};
-    game.pontus.entityGroup = game.add.group();
 
     Resources.Load(game);
 }
@@ -40,8 +45,8 @@ function preload() {
 function create() {
     
     
-    addLevel(new Level(game, "level_01"));
-    
+    addLevel(this.level_01 = new Level(game, "level_01"));
+
 
     entityParser = new GameEntityParser();
     entityParser.BuildPlayerEntityMenu(game);
@@ -51,6 +56,8 @@ function create() {
     game.add.sprite(0, 0, overlay);
 
     setCurrentLevel("level_01");
+
+
 
 }
 
@@ -74,7 +81,7 @@ function update() {
 
             var type = PlayerUnits.Goblin;
             var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
-            var x = 800;
+            var x = game.world.width;
             var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
            
             var r = currentlySelected; //Math.round(Math.random() * 5);
@@ -101,14 +108,18 @@ function update() {
             }
            
 
-            currentLevel.addEntity(new Entity(x, y, type, game));
-            game.world.bringToTop(game.pontus.entityGroup);
+            currentLevel.addEntity(new Entity(x, y, type, game, lane));
+
+            game.world.bringToTop(currentLevel.tree_tops);
 
             timer = 0;
         }
 
         currentLevel.update();
     }
+
+
+
 }
 
 function DrawRectangle(x, y, w, h){
