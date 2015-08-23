@@ -31,6 +31,9 @@ function preload() {
     game.load.spritesheet('MossGolem_Walk', 'assets/MossGolem_Walk.png', 201, 201);
     game.load.spritesheet('RockQuarry_Walk', 'assets/RockQuarry_Walk.png', 201, 201);
 
+    game.pontus = {};
+    game.pontus.entityGroup = game.add.group();
+
     Resources.Load(game);
 }
 
@@ -98,7 +101,8 @@ function update() {
             }
            
 
-            currentLevel.addEntity(new Entity(x, y, type));
+            currentLevel.addEntity(new Entity(x, y, type, game));
+            game.world.bringToTop(game.pontus.entityGroup);
 
             timer = 0;
         }
