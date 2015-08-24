@@ -111,33 +111,65 @@ function GetLaneOverlayLocations(){
 
 var timer = 0;
 
+var spawnLimits = [];
+
 function update() {
     overlay.clear();
     
-    if(game.input.activePointer.isDown){
+    if(game.input.activePointer.isDown && spawnLimits[6]){
+        spawnLimits[6] = false;
         currentPlayerUnitSelected = GetCurrentSelectedPlayerUnit(currentPlayerUnitSelected);
         currentlySelectedLane = GetCurrentlySelectedLane(currentlySelectedLane);
+    } else if (!game.input.activePointer.isDown && !spawnLimits[6]) {
+        spawnLimits[6] = true;
     }
     
     //Keyboard keys
-    if(game.input.keyboard.isDown(Phaser.Keyboard.ONE))
+    if(game.input.keyboard.isDown(Phaser.Keyboard.ONE) && !spawnLimits[0]){
+        spawnLimits[0] = true;
         currentPlayerUnitSelected = 5;
-    
-    if(game.input.keyboard.isDown(Phaser.Keyboard.TWO))
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.ONE) && spawnLimits[0]) {
+        spawnLimits[0] = false;
+    }
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.TWO) && !spawnLimits[5]){
+        spawnLimits[5] = true;
         currentPlayerUnitSelected = 4;
-    
-    if(game.input.keyboard.isDown(Phaser.Keyboard.THREE))
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.TWO) && spawnLimits[5]) {
+        spawnLimits[5] = false;
+    }
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.THREE) && !spawnLimits[1]){
+        spawnLimits[1] = true;
         currentPlayerUnitSelected = 0;
-    
-    if(game.input.keyboard.isDown(Phaser.Keyboard.FOUR))
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.THREE) && spawnLimits[1]) {
+        spawnLimits[1] = false;
+    }
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FOUR) && !spawnLimits[2]){
+        spawnLimits[2] = true;
         currentPlayerUnitSelected = 3;
-    
-    if(game.input.keyboard.isDown(Phaser.Keyboard.FIVE))
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.FOUR) && spawnLimits[2]) {
+        spawnLimits[2] = false;
+    }
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FIVE) && !spawnLimits[3]){
+        spawnLimits[3] = true;
         currentPlayerUnitSelected = 1;
-    
-    if(game.input.keyboard.isDown(Phaser.Keyboard.SIX))
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.FIVE) && spawnLimits[3]) {
+        spawnLimits[3] = false;
+    }
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.SIX) && !spawnLimits[4]){
+        spawnLimits[4] = true;
         currentPlayerUnitSelected = 2;
+    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.SIX) && spawnLimits[4]) {
+        spawnLimits[4] = false;
+    }
+
+
     
+   
     if (currentLevel != null){
 
 
@@ -145,7 +177,7 @@ function update() {
             game.ai.update(currentLevel);
         }
 
-        timer += 1;
+        timer += 15;
         if (timer >= 60) {
             var type = 0;
             var x = game.world.width - 64;
@@ -174,6 +206,9 @@ function update() {
            
             if(type != 0){
                 if(type.Cost <= monsterPoints){
+
+                    console.log("Spawning Entity: " + type.Name + ", in lane: " + currentlySelectedLane);
+
                     currentLevel.addEntity(new Entity(x, y, type, game));
                     monsterPoints -= type.Cost;
                 }

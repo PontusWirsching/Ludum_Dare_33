@@ -82,7 +82,7 @@ PlayerUnits = {
         width: 201,
         height: 201,
         xOffset: 0,
-        yOffset: -43
+        yOffset: 21
     },
     RockQuarry : {
         type: "monster",

@@ -26,6 +26,7 @@ function Entity(x, y, type, game) {
         this.sprite.animations.play('walk', animFPS, true);
 	}
     
+
     this.ChangeToState = function(state){
         this.sprite.kill();
         this.state = state;
@@ -39,6 +40,7 @@ function Entity(x, y, type, game) {
                 this.walk = this.sprite.animations.add('attack');
                 this.sprite.animations.play('attack', animFPS, true);
         } 
+        this.sprite.smoothed = false;
     }
 
 	this.update = function() {
