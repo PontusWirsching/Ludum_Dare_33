@@ -100,5 +100,22 @@ PlayerUnits = {
         height: 201,
         xOffset: 0,
         yOffset: -14
+    },
+    ThunderDrake : {
+        type: "monster",
+        Name: "ThunderDrake",
+        Cost: 10,
+        Size: GameTypes.Sizes.Large,
+        Faction: GameTypes.Faction.Player,
+        MovementSpeed: GameTypes.Speeds.Slow,
+        AttackSpeed: GameTypes.Speeds.Medium,
+        ArmorTypes: GameTypes.ArmorTypes.Light,
+        AttackTypes: [GameTypes.AttackTypes.Melee],
+        AdvantageTo: [],
+        DisadvantageTo: [],
+        width: 301,
+        height: 301,
+        xOffset: 0,
+        yOffset: 0
     }
 };

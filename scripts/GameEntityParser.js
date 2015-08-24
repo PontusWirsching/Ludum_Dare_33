@@ -28,6 +28,9 @@ function GameEntityParser(game){
                                        row * GameSettings.TileSize + GameSettings.TileSize / 2, 
                                        PlayerUnits[playerUnit].Name, 'Walk_000.png');   
             unit.anchor.setTo(0.5, 0.5);
+           
+
+
             this.units.push(new Unit(column * GameSettings.TileSize,
                                      row * GameSettings.TileSize, 
                                      GetPlayerUnitIndexFromName(PlayerUnits[playerUnit].Name),

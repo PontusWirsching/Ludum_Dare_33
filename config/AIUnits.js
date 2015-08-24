@@ -32,5 +32,57 @@ AIUnits = {
         height: 32,
         xOffset: 0,
         yOffset: 20
+    },
+    Cannoneer : {
+        type: "ai_monster",
+        Name: "Cannoneer",
+        Cost: 10,
+        Size: GameTypes.Sizes.Small,
+        Faction: GameTypes.Faction.Enemy,
+        MovementSpeed: GameTypes.Speeds.Medium,
+        AttackSpeed: GameTypes.Speeds.Medium,
+        ArmorTypes: GameTypes.ArmorTypes.Light,
+        AttackTypes: [GameTypes.AttackTypes.Ranged],
+        AdvantageTo: [],
+        DisadvantageTo: [],
+        width: 32,
+        height: 32,
+        xOffset: 0,
+        yOffset: -12
+    },
+    BlazitMage : {
+        type: "ai_monster",
+        Name: "BlazitMage",
+        Cost: 10,
+        Size: GameTypes.Sizes.Small,
+        Faction: GameTypes.Faction.Enemy,
+        MovementSpeed: GameTypes.Speeds.Medium,
+        AttackSpeed: GameTypes.Speeds.Medium,
+        ArmorTypes: GameTypes.ArmorTypes.Light,
+        AttackTypes: [GameTypes.AttackTypes.Ranged],
+        AdvantageTo: [],
+        DisadvantageTo: [],
+        width: 32,
+        height: 32,
+        xOffset: 0,
+        yOffset: -12
+    },
+    TimberMech : {
+        type: "ai_monster",
+        Name: "TimberMech",
+        Cost: 10,
+        Size: GameTypes.Sizes.Small,
+        Faction: GameTypes.Faction.Enemy,
+        MovementSpeed: GameTypes.Speeds.Slow,
+        AttackSpeed: GameTypes.Speeds.Medium,
+        ArmorTypes: GameTypes.ArmorTypes.Light,
+        AttackTypes: [GameTypes.AttackTypes.Ranged],
+        AdvantageTo: [],
+        DisadvantageTo: [],
+        width: 64,
+        height: 64,
+        xOffset: 0,
+        yOffset: 0
     }
+    
 };

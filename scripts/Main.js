@@ -47,15 +47,29 @@ function preload() {
     game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
     game.load.spritesheet('RockQuarry_Attack', 'assets/Entities/RockQuarry_Attack.png', 201, 201);
 
+    game.load.spritesheet('ThunderDrake_Walk', 'assets/Entities/ThunderDrake_Walk.png', 301, 301);
+    game.load.spritesheet('ThunderDrake_Attack', 'assets/Entities/ThunderDrake_Attack.png', 301, 301);
+
 
     /* AI Units loading: */
     game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
+
+    game.load.spritesheet('DwarvenKnight_Walk', 'assets/Entities/DwarvenKnight_Walk.png', 81, 81);
+
+    game.load.spritesheet('Cannoneer_Walk', 'assets/Entities/Cannoneer_Walk.png', 161, 161);
+
+    game.load.spritesheet('BlazitMage_Walk', 'assets/Entities/BlazitMage_Walk.png', 151, 151);
+
+    game.load.spritesheet('TimberMech_Walk', 'assets/Entities/TimberMech_Walk.png', 301, 301);
+
+
+
 }
 
 function create() {
     addLevel(this.level_01 = new Level(game, "level_01"));
     currentPlayerUnitSelected = -1;
-    currentlySelectedLane = 0;
+    currentlySelectedLane = 1;
     monsterPoints = 100;
     
     setCurrentLevel("level_01");
@@ -64,21 +78,28 @@ function create() {
     overlay = game.add.bitmapData(game.width, game.height);
     game.add.sprite(0, 0, overlay);
     playerUnitOverlayLocations = GetPlayerUnitOverlayLocations();
+    
+    game.gui = game.add.group();
+
+
     DrawOverlayLocation();
     
     laneOverLayLocations = GetLaneOverlayLocations();
     DrawLaneOverlayLocations();
     
-    game.ai = new AI(game);
+    game.ai = new AI(game, currentLevel);
+
 }
 
 function DrawOverlayLocation(){
-    game.add.sprite(680, 70, 'KoboldRunner_Walk', 0);
-    game.add.sprite(710, 70, 'KoboldSap_Walk', 0);
-    game.add.sprite(676, 105, 'Goblin_Walk', 0);
-    game.add.sprite(710, 105, 'OrcSpearThrower_Walk', 0);
-    game.add.sprite(620, 85, 'MossGolem_Walk', 0);
-    game.add.sprite(639, 155, 'RockQuarry_Walk', 0);
+    game.gui.add(game.add.sprite(680, 70, 'KoboldRunner_Walk', 0));
+    game.gui.add(game.add.sprite(710, 70, 'KoboldSap_Walk', 0));
+    game.gui.add(game.add.sprite(676, 105, 'Goblin_Walk', 0));
+    game.gui.add(game.add.sprite(710, 105, 'OrcSpearThrower_Walk', 0));
+    game.gui.add(game.add.sprite(620, 85, 'MossGolem_Walk', 0));
+    game.gui.add(game.add.sprite(639, 155, 'RockQuarry_Walk', 0));
+    game.gui.add(game.add.sprite(588, 160, 'ThunderDrake_Walk', 0));
+
 }
 
 function GetPlayerUnitOverlayLocations(){
@@ -89,6 +110,7 @@ function GetPlayerUnitOverlayLocations(){
         new PlayerUnitOverlayLocation(732, 125, 32, 32, GameTypes.PlayerUnits.OrcSpearThrower),
         new PlayerUnitOverlayLocation(732, 95, 32, 32, GameTypes.PlayerUnits.KoboldSap),
         new PlayerUnitOverlayLocation(700, 95, 32, 32, GameTypes.PlayerUnits.KoboldRunner),
+        new PlayerUnitOverlayLocation(705, 264, 64, 64, GameTypes.PlayerUnits.ThunderDrake),
     ];
     
     
@@ -167,6 +189,13 @@ function update() {
         spawnLimits[4] = false;
     }
 
+    //if(game.input.keyboard.isDown(Phaser.Keyboard.SEVEN) && !spawnLimits[6]){
+    //    spawnLimits[6] = true;
+    //    currentPlayerUnitSelected = 6;
+    //} else if (!game.input.keyboard.isDown(Phaser.Keyboard.SEVEN) && spawnLimits[6]) {
+   //     spawnLimits[6] = false;
+    //}
+
 
     
    
@@ -201,6 +230,9 @@ function update() {
             case GameTypes.PlayerUnits.KoboldRunner:
                 type = PlayerUnits.KoboldRunner;
                 break;
+            case GameTypes.PlayerUnits.ThunderDrake:
+                type = PlayerUnits.ThunderDrake;
+                break;
         }
        
         if(type != 0){
@@ -219,7 +251,9 @@ function update() {
         
 
         game.world.bringToTop(currentLevel.tree_tops);
-        
+        game.world.bringToTop(gui);
+        game.world.bringToTop(game.gui);
+
             
 
         currentLevel.update();
@@ -243,6 +277,8 @@ function GetPlayerUnitCost(playerUnit){
             return PlayerUnits.KoboldSap.Cost;
         case GameTypes.PlayerUnits.KoboldRunner:
             return PlayerUnits.KoboldRunner.Cost;
+        case GameTypes.PlayerUnits.ThunderDrake:
+            return PlayerUnits.ThunderDrake.Cost;
     }
 }
 

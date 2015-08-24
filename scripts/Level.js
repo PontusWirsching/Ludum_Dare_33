@@ -7,6 +7,8 @@ function Level(game, name) {
     /* This is an array of y positions, for example: index 0 is the y pos of the top lane. */
     this.lanes = [96, 160, 224, 288, 352, 416, 480];
 
+    this.aiSpawningXPos = 128;
+
     /* A list of entities currently in the level. */
     this.entities = [];
 

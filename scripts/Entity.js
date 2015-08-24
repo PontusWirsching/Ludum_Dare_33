@@ -18,7 +18,9 @@ function Entity(x, y, type, game) {
 	if (type.Name == "OrcSpearThrower")
 		animFPS = 24;
 	if (type.Name == "ElvenArcher")
-		animFPS = 24
+		animFPS = 24;
+	if (type.Name == "DwarvenKnight")
+		animFPS = 16.36;
 
 	if (this.sprite == null) {
 		this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
@@ -43,12 +45,32 @@ function Entity(x, y, type, game) {
         this.sprite.smoothed = false;
     }
 
+    // How long should the DwarvenKnight walk, this is measured in updates. (1 sec = 60 updates)
+    this.walkTime = 36 / 2;
+    this.pauseTime = 36 / 2;
+    this.timer = 0;
+
 	this.update = function() {
 		if (this.type.Faction == GameTypes.Faction.Player && this.state == GameTypes.EntityState.Walking) {
 			this.x -= this.type.MovementSpeed;
 		}
 		if (this.type.Faction == GameTypes.Faction.Enemy && this.state == GameTypes.EntityState.Walking) {
-			this.x += this.type.MovementSpeed;
+			
+			if (this.type.Name == "DwarvenKnight") {
+				this.timer++;
+
+				if (this.timer >= this.walkTime) {
+					if (this.timer >= this.walkTime + this.pauseTime) {
+						this.timer = 0;
+					}
+				} else {
+					this.x += this.type.MovementSpeed;
+				}
+
+			} else {
+				this.x += this.type.MovementSpeed;
+			}
+
 		}
 
 		this.sprite.x = Math.floor(this.x);

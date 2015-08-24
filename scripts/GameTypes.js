@@ -41,7 +41,8 @@ GameTypes.PlayerUnits = {
     RockQuarry:2,
     OrcSpearThrower:3,
     KoboldSap:4,
-    KoboldRunner:5
+    KoboldRunner:5,
+    ThunderDrake: 6
 }
 GameTypes.EntityState = {
     Walking:0,
