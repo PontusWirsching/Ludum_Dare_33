@@ -43,3 +43,7 @@ GameTypes.PlayerUnits = {
     KoboldSap:4,
     KoboldRunner:5
 }
+GameTypes.EntityState = {
+    Walking:0,
+    Attacking:1
+}

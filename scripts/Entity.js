@@ -7,6 +7,7 @@ function Entity(x, y, type, game) {
 	this.height = type.height;
 	this.x = x - this.width / 2 - type.xOffset;
 	this.y = y - this.height / 2 - type.yOffset;
+    this.state = GameTypes.EntityState.Walking;
 
 	this.type = type;
 
@@ -21,21 +22,30 @@ function Entity(x, y, type, game) {
 
 	if (this.sprite == null) {
 		this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
-		this.walk = this.sprite.animations.add('walk');
-		this.sprite.animations.play('walk', animFPS, true);
+        this.walk = this.sprite.animations.add('walk');
+        this.sprite.animations.play('walk', animFPS, true);
 	}
-
-
-
-	
-
+    
+    this.ChangeToState = function(state){
+        this.sprite.kill();
+        this.state = state;
+        switch(this.state){
+            case GameTypes.EntityState.Walking:
+                this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
+                this.walk = this.sprite.animations.add('walk');
+                this.sprite.animations.play('walk', animFPS, true);
+            case GameTypes.EntityState.Attacking:
+                this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Attack');
+                this.walk = this.sprite.animations.add('attack');
+                this.sprite.animations.play('attack', animFPS, true);
+        } 
+    }
 
 	this.update = function() {
-
-		if (this.type.Faction == GameTypes.Faction.Player) {
+		if (this.type.Faction == GameTypes.Faction.Player && this.state == GameTypes.EntityState.Walking) {
 			this.x -= this.type.MovementSpeed;
 		}
-		if (this.type.Faction == GameTypes.Faction.Enemy) {
+		if (this.type.Faction == GameTypes.Faction.Enemy && this.state == GameTypes.EntityState.Walking) {
 			this.x += this.type.MovementSpeed;
 		}
 

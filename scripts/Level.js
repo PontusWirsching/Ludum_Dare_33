@@ -50,7 +50,7 @@ function Level(game, name) {
 
             if (entity.type.type == "monster")
                 if (entity.x < 100) {
-                    entity.sprite.kill();
+                    entity.ChangeToState(GameTypes.EntityState.Attacking);
                     this.entities.splice(i, 1);
                 }
 

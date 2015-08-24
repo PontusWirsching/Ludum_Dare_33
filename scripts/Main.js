@@ -30,11 +30,22 @@ function preload() {
     game.load.image('level_01_rocks', 'assets/Rocks.png');
 
     game.load.spritesheet('KoboldRunner_Walk', 'assets/Entities/KoboldRunner_Walk.png', 81, 81);
+    game.load.spritesheet('KoboldRunner_Attack', 'assets/Entities/KoboldRunner_Attack.png', 81, 81);
+    
     game.load.spritesheet('KoboldSap_Walk', 'assets/Entities/KoboldSap_Walk.png', 81, 81);
+    game.load.spritesheet('KoboldSap_Attack', 'assets/Entities/KoboldSap_Attack.png', 81, 81);
+    
     game.load.spritesheet('Goblin_Walk', 'assets/Entities/Goblin_Walk.png', 81, 81);
+    game.load.spritesheet('Goblin_Attack', 'assets/Entities/Goblin_Attack.png', 81, 81);
+    
     game.load.spritesheet('OrcSpearThrower_Walk', 'assets/Entities/OrcSpearThrower_Walk.png', 81, 81);
+    game.load.spritesheet('OrcSpearThrower_Attack', 'assets/Entities/OrcSpearThrower_Attack.png', 81, 81);
+    
     game.load.spritesheet('MossGolem_Walk', 'assets/Entities/MossGolem_Walk.png', 201, 201);
+    game.load.spritesheet('MossGolem_Attack', 'assets/Entities/MossGolem_Attack.png', 201, 201);
+    
     game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
+    game.load.spritesheet('RockQuarry_Attack', 'assets/Entities/RockQuarry_Attack.png', 201, 201);
 
 
     /* AI Units loading: */
