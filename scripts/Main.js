@@ -1,4 +1,4 @@
-var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 var levels = []; // Array of levels.
 var currentLevel; // The level to currently be updated.
@@ -43,15 +43,19 @@ function preload() {
 
 function create() {
     addLevel(this.level_01 = new Level(game, "level_01"));
-    currentlySelected = 0;
+    currentPlayerUnitSelected = -1;
+    currentlySelectedLane = 0;
     
     setCurrentLevel("level_01");
     gui = game.add.sprite(0, 0, 'gui');
     
     overlay = game.add.bitmapData(game.width, game.height);
     game.add.sprite(0, 0, overlay);
-    overlayLocations = GetOverlayLocations();
+    playerUnitOverlayLocations = GetPlayerUnitOverlayLocations();
     DrawOverlayLocation();
+    
+    laneOverLayLocations = GetLaneOverlayLocations();
+    DrawLaneOverlayLocations();
     
     game.ai = new AI(game);
 }
@@ -65,24 +69,63 @@ function DrawOverlayLocation(){
     game.add.sprite(639, 155, 'RockQuarry_Walk', 0);
 }
 
-
-function GetOverlayLocations(){
-    var overlayLocations = [
-        new OverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
-        new OverlayLocation(700, 155, 32, 68, GameTypes.PlayerUnits.MossGolem),
-        new OverlayLocation(705, 223, 58, 35, GameTypes.PlayerUnits.RockQuarry),
-        new OverlayLocation(732, 125, 32, 32, GameTypes.PlayerUnits.OrcSpearThrower),
-        new OverlayLocation(732, 95, 32, 32, GameTypes.PlayerUnits.KoboldSap),
-        new OverlayLocation(700, 95, 32, 32, GameTypes.PlayerUnits.KoboldRunner),
+function GetPlayerUnitOverlayLocations(){
+    var playerUnitOverlayLocations = [
+        new PlayerUnitOverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
+        new PlayerUnitOverlayLocation(700, 155, 32, 68, GameTypes.PlayerUnits.MossGolem),
+        new PlayerUnitOverlayLocation(705, 223, 58, 35, GameTypes.PlayerUnits.RockQuarry),
+        new PlayerUnitOverlayLocation(732, 125, 32, 32, GameTypes.PlayerUnits.OrcSpearThrower),
+        new PlayerUnitOverlayLocation(732, 95, 32, 32, GameTypes.PlayerUnits.KoboldSap),
+        new PlayerUnitOverlayLocation(700, 95, 32, 32, GameTypes.PlayerUnits.KoboldRunner),
     ];
     
     
-    return overlayLocations;
+    return playerUnitOverlayLocations;
+}
+
+function GetLaneOverlayLocations(){
+    var laneOverLayLocations = [
+        new LaneOverlayLocation(163, 96, 540, 30, 1),
+        new LaneOverlayLocation(163, 160, 540, 30, 2),
+        new LaneOverlayLocation(163, 225, 540, 30, 3),
+        new LaneOverlayLocation(163, 288, 540, 30, 4),
+        new LaneOverlayLocation(163, 353, 540, 30, 5),
+        new LaneOverlayLocation(163, 416, 540, 30, 6),
+        new LaneOverlayLocation(163, 480, 540, 30, 7),
+    ];
+    
+    return laneOverLayLocations;
 }
 
 var timer = 0;
 
-function update() { 
+function update() {
+    overlay.clear();
+    
+    if(game.input.activePointer.isDown){
+        currentPlayerUnitSelected = GetCurrentSelectedPlayerUnit(currentPlayerUnitSelected);
+        currentlySelectedLane = GetCurrentlySelectedLane(currentlySelectedLane);
+    }
+    
+    //Keyboard keys
+    if(game.input.keyboard.isDown(Phaser.Keyboard.ONE))
+        currentPlayerUnitSelected = 5;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.TWO))
+        currentPlayerUnitSelected = 4;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.THREE))
+        currentPlayerUnitSelected = 0;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FOUR))
+        currentPlayerUnitSelected = 3;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FIVE))
+        currentPlayerUnitSelected = 1;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.SIX))
+        currentPlayerUnitSelected = 2;
+    
     if (currentLevel != null){
 
 
@@ -92,14 +135,11 @@ function update() {
 
         timer += 1;
         if (timer >= 60) {
-            var type = PlayerUnits.Goblin;
-            var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
+            var type = 0;
             var x = game.world.width - 64;
-            var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
-           
-            var r = currentlySelected; //Math.round(Math.random() * 5);
+            var y = currentLevel.lanes[currentlySelectedLane - 1] + currentLevel.laneOffset;
 
-            switch(r) {
+            switch(currentPlayerUnitSelected) {
                 case GameTypes.PlayerUnits.Goblin:
                     type = PlayerUnits.Goblin;
                     break;
@@ -120,8 +160,11 @@ function update() {
                     break;
             }
            
-
-            currentLevel.addEntity(new Entity(x, y, type, game));
+            if(type != 0){
+                currentLevel.addEntity(new Entity(x, y, type, game));
+                currentPlayerUnitSelected = GameTypes.PlayerUnits.NotSelected;
+                DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
+            }
 
             game.world.bringToTop(currentLevel.tree_tops);
             
@@ -131,22 +174,49 @@ function update() {
         currentLevel.update();
     }
     
-    for(var i=0;i<overlayLocations.length;i++){
+    DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
+    DrawLaneOverlayLocations(currentlySelectedLane);
+}
+
+function GetCurrentSelectedPlayerUnit(currentlySelected){    
+    for(var i=0;i<playerUnitOverlayLocations.length;i++){  
+        if(MouseOverlapsLocation(playerUnitOverlayLocations[i],
+                                 game.input.mouse.input.x,
+                                 game.input.mouse.input.y)){
+            return playerUnitOverlayLocations[i].unit;
+        }
+    }
+    return currentlySelected;
+}
+
+function GetCurrentlySelectedLane(currentlySelected){
+    for(var i=0;i<laneOverLayLocations.length;i++){
         if(game.input.activePointer.isDown){
-            if(MouseOverlapsLocation(overlayLocations[i],
+            if(MouseOverlapsLocation(laneOverLayLocations[i],
                                      game.input.mouse.input.x,
                                      game.input.mouse.input.y)){
-                currentlySelected = overlayLocations[i].unit;
+                return laneOverLayLocations[i].laneNumber;
             }
         }
     }
-
-    SetCurrentSelectionBox(currentlySelected);
+    return currentlySelected;
 }
 
-function SetCurrentSelectionBox(currentlySelected){
-    for(var i=0;i<overlayLocations.length;i++){
-        var overlayLocation = overlayLocations[i];
+function DrawLaneOverlayLocations(currentlySelected){
+    for(var i=0;i<laneOverLayLocations.length;i++){
+        var overlayLocation = laneOverLayLocations[i];
+        if(overlayLocation.laneNumber == currentlySelected){
+            DrawRectangle(overlayLocation.x,
+                          overlayLocation.y,
+                          overlayLocation.width,
+                          overlayLocation.height);
+        }
+    }
+}
+
+function DrawCurrentSelectionBoxForPlayerUnit(currentlySelected){
+    for(var i=0;i<playerUnitOverlayLocations.length;i++){
+        var overlayLocation = playerUnitOverlayLocations[i];
         if(overlayLocation.unit == currentlySelected){
             DrawRectangle(overlayLocation.x,
                           overlayLocation.y,
@@ -157,7 +227,6 @@ function SetCurrentSelectionBox(currentlySelected){
 }
 
 function DrawRectangle(x, y, w, h){
-    overlay.clear();
     overlay.ctx.beginPath();
     overlay.ctx.rect(x, y, w, h);
     overlay.ctx.strokeStyle = '#00ff00';
@@ -169,7 +238,7 @@ function MouseOverlapsLocation(overlayLocation, mouseX, mouseY){
             mouseY > overlayLocation.y && mouseY < overlayLocation.y + overlayLocation.height);
 }
 
-function OverlayLocation(x, y, w, h, unit){
+function PlayerUnitOverlayLocation(x, y, w, h, unit){
     this.x = x;
     this.y = y;
     this.width = w;
@@ -177,6 +246,10 @@ function OverlayLocation(x, y, w, h, unit){
     this.unit = unit;
 }
 
-function render(){
-    //game.debug.text("currentPlayerSelection : " + entityParser.currentlySelected, 2, 32, "#00ff00");
+function LaneOverlayLocation(x, y, w, h, laneNumber){
+    this.x = x;
+    this.y = y;
+    this.width = w;
+    this.height = h;
+    this.laneNumber = laneNumber;
 }

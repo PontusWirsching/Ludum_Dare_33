@@ -35,6 +35,7 @@ GameTypes.Sizes = {
     Large:2 //2x2
 }
 GameTypes.PlayerUnits = {
+    NotSelected:-1,
     Goblin:0,
     MossGolem:1,
     RockQuarry:2,
