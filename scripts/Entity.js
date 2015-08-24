@@ -84,6 +84,16 @@ function Entity(x, y, type, game) {
                 this.walk = this.sprite.animations.add('attack');
                 this.sprite.animations.play('attack', animFPS, true);
                 break;
+                
+            case GameTypes.EntityState.Death:
+
+            	if (this.type.Name == "ElvenArcher")
+            		this.shittyOffset = -(300 - 40);
+
+                this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Death');
+                this.walk = this.sprite.animations.add('death');
+                this.sprite.animations.play('death', animFPS, false);
+                break;
         } 
         this.sprite.smoothed = false;
     }
@@ -94,10 +104,9 @@ function Entity(x, y, type, game) {
     this.timer = 0;
 
 	this.update = function() {
-
-		
-
-
+        
+        
+        
 		if (this.type.Faction == GameTypes.Faction.Player && this.state == GameTypes.EntityState.Walking) {
 			if (!this.isAttacking) this.x -= this.type.MovementSpeed;
 		}

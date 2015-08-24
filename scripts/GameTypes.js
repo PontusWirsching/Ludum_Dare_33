@@ -46,5 +46,6 @@ GameTypes.PlayerUnits = {
 }
 GameTypes.EntityState = {
     Walking:0,
-    Attacking:1
+    Attacking:1,
+    Death:2
 }

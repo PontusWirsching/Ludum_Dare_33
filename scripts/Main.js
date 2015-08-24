@@ -31,37 +31,49 @@ function preload() {
 
     game.load.spritesheet('KoboldRunner_Walk', 'assets/Entities/KoboldRunner_Walk.png', 81, 81);
     game.load.spritesheet('KoboldRunner_Attack', 'assets/Entities/KoboldRunner_Attack.png', 81, 81);
+    game.load.spritesheet('KoboldRunner_Death', 'assets/Entities/KoboldRunner_Death.png', 81, 81);
     
     game.load.spritesheet('KoboldSap_Walk', 'assets/Entities/KoboldSap_Walk.png', 81, 81);
     game.load.spritesheet('KoboldSap_Attack', 'assets/Entities/KoboldSap_Attack.png', 81, 81);
+    game.load.spritesheet('KoboldSap_Death', 'assets/Entities/KoboldSap_Death.png', 81, 81);
     
     game.load.spritesheet('Goblin_Walk', 'assets/Entities/Goblin_Walk.png', 81, 81);
     game.load.spritesheet('Goblin_Attack', 'assets/Entities/Goblin_Attack.png', 81, 81);
+    game.load.spritesheet('Goblin_Death', 'assets/Entities/Goblin_Death.png', 81, 81);
     
     game.load.spritesheet('OrcSpearThrower_Walk', 'assets/Entities/OrcSpearThrower_Walk.png', 81, 81);
     game.load.spritesheet('OrcSpearThrower_Attack', 'assets/Entities/OrcSpearThrower_Attack.png', 81, 81);
+    game.load.spritesheet('OrcSpearThrower_Death', 'assets/Entities/OrcSpearThrower_Death.png', 81, 81);
     
     game.load.spritesheet('MossGolem_Walk', 'assets/Entities/MossGolem_Walk.png', 201, 201);
     game.load.spritesheet('MossGolem_Attack', 'assets/Entities/MossGolem_Attack.png', 201, 201);
+    game.load.spritesheet('MossGolem_Death', 'assets/Entities/MossGolem_Death.png', 201, 201);
     
     game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
     game.load.spritesheet('RockQuarry_Attack', 'assets/Entities/RockQuarry_Attack.png', 201, 201);
+    game.load.spritesheet('RockQuarry_Death', 'assets/Entities/RockQuarry_Death.png', 201, 201);
 
     game.load.spritesheet('ThunderDrake_Walk', 'assets/Entities/ThunderDrake_Walk.png', 301, 301);
     game.load.spritesheet('ThunderDrake_Attack', 'assets/Entities/ThunderDrake_Attack.png', 301, 301);
+    game.load.spritesheet('ThunderDrake_Death', 'assets/Entities/ThunderDrake_Death.png', 301, 301);
 
 
     /* AI Units loading: */
     game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
     game.load.spritesheet('ElvenArcher_Attack', 'assets/Entities/ElvenArcher_Attack.png', 601, 81);
+    game.load.spritesheet('ElvenArcher_Death', 'assets/Entities/ElvenArcher_Death.png', 81, 81);
 
     game.load.spritesheet('DwarvenKnight_Walk', 'assets/Entities/DwarvenKnight_Walk.png', 81, 81);
+    game.load.spritesheet('DwarvenKnight_Death', 'assets/Entities/DwarvenKnight_Death.png', 81, 81);
 
     game.load.spritesheet('Cannoneer_Walk', 'assets/Entities/Cannoneer_Walk.png', 161, 161);
+    game.load.spritesheet('Cannoneer_Death', 'assets/Entities/Cannoneer_Death.png', 161, 161);
 
     game.load.spritesheet('BlazitMage_Walk', 'assets/Entities/BlazitMage_Walk.png', 151, 151);
+    game.load.spritesheet('BlazitMage_Death', 'assets/Entities/BlazitMage_Death.png', 151, 151);
 
     game.load.spritesheet('TimberMech_Walk', 'assets/Entities/TimberMech_Walk.png', 301, 301);
+    game.load.spritesheet('TimberMech_Death', 'assets/Entities/TimberMech_Death.png', 301, 301);
 
 
     /* GUI stuff */

@@ -106,7 +106,7 @@ function Level(game, name) {
                 }
 
             if (entity.health <= 0) {
-                entity.sprite.kill();
+                entity.ChangeToState(GameTypes.EntityState.Death);
                 this.entities.splice(i, 1);
                 if (entity.type.type == "ai_monster") {
                     this.game.global.monsterPoints += entity.type.Cost;
