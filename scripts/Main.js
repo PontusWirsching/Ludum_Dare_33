@@ -176,57 +176,26 @@ function update() {
     }
     
     //Keyboard keys
-    if(game.input.keyboard.isDown(Phaser.Keyboard.ONE) && !spawnLimits[0]){
-        spawnLimits[0] = true;
-        currentPlayerUnitSelected = 5;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.ONE) && spawnLimits[0]) {
-        spawnLimits[0] = false;
-    }
+    if(game.input.keyboard.isDown(Phaser.Keyboard.ONE))
+        currentlySelectedLane = 1;
 
-    if(game.input.keyboard.isDown(Phaser.Keyboard.TWO) && !spawnLimits[5]){
-        spawnLimits[5] = true;
-        currentPlayerUnitSelected = 4;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.TWO) && spawnLimits[5]) {
-        spawnLimits[5] = false;
-    }
-
-    if(game.input.keyboard.isDown(Phaser.Keyboard.THREE) && !spawnLimits[1]){
-        spawnLimits[1] = true;
-        currentPlayerUnitSelected = 0;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.THREE) && spawnLimits[1]) {
-        spawnLimits[1] = false;
-    }
-
-    if(game.input.keyboard.isDown(Phaser.Keyboard.FOUR) && !spawnLimits[2]){
-        spawnLimits[2] = true;
-        currentPlayerUnitSelected = 3;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.FOUR) && spawnLimits[2]) {
-        spawnLimits[2] = false;
-    }
-
-    if(game.input.keyboard.isDown(Phaser.Keyboard.FIVE) && !spawnLimits[3]){
-        spawnLimits[3] = true;
-        currentPlayerUnitSelected = 1;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.FIVE) && spawnLimits[3]) {
-        spawnLimits[3] = false;
-    }
-
-    if(game.input.keyboard.isDown(Phaser.Keyboard.SIX) && !spawnLimits[4]){
-        spawnLimits[4] = true;
-        currentPlayerUnitSelected = 2;
-    } else if (!game.input.keyboard.isDown(Phaser.Keyboard.SIX) && spawnLimits[4]) {
-        spawnLimits[4] = false;
-    }
-
-    //if(game.input.keyboard.isDown(Phaser.Keyboard.SEVEN) && !spawnLimits[6]){
-    //    spawnLimits[6] = true;
-    //    currentPlayerUnitSelected = 6;
-    //} else if (!game.input.keyboard.isDown(Phaser.Keyboard.SEVEN) && spawnLimits[6]) {
-   //     spawnLimits[6] = false;
-    //}
-
-
+    if(game.input.keyboard.isDown(Phaser.Keyboard.TWO))
+        currentlySelectedLane = 2;
     
+    if(game.input.keyboard.isDown(Phaser.Keyboard.THREE))
+        currentlySelectedLane = 3;
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FOUR))
+        currentlySelectedLane = 4;
+
+    if(game.input.keyboard.isDown(Phaser.Keyboard.FIVE))
+        currentlySelectedLane = 5;
+        
+    if(game.input.keyboard.isDown(Phaser.Keyboard.SIX))
+        currentlySelectedLane = 6;
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.SEVEN))
+        currentlySelectedLane = 7;
    
     if (currentLevel != null){
 
