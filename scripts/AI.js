@@ -3,11 +3,11 @@ function AI(game, currentLevel) {
 	this.game = game;
 	this.currentLevel = currentLevel;
 
-	this.timer = 0;
+	this.timer = 100000;
 	this.update = function(currentLevel) {
 
 		this.timer++;
-		if (this.timer >= 60 * 2) {
+		if (this.timer >= 60 * 4) {
 
 			var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
             var x = currentLevel.aiSpawningXPos;
@@ -32,6 +32,8 @@ function AI(game, currentLevel) {
             		unit = AIUnits.TimberMech;
             		break;
             }
+
+            unit = AIUnits.ElvenArcher;
 
 
 			currentLevel.addEntity(new Entity(x, y, unit, this.game));

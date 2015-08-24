@@ -7,7 +7,7 @@ function Level(game, name) {
     /* This is an array of y positions, for example: index 0 is the y pos of the top lane. */
     this.lanes = [96, 160, 224, 288, 352, 416, 480];
 
-    this.aiSpawningXPos = 128;
+    this.aiSpawningXPos = -100;
 
     /* A list of entities currently in the level. */
     this.entities = [];
@@ -38,7 +38,8 @@ function Level(game, name) {
         this.tree_tops = this.game.add.sprite(128 + 48 + 32, 64 + 32 + 8 + 5, this.name + '_tree_tops');
 
     }
-    
+
+
     /* Updates all of the entities. */
     this.update = function() {
         for (var i = 0; i < this.entities.length; i++) {
@@ -50,11 +51,68 @@ function Level(game, name) {
 
             //this.game.debug.spriteBounds(entity.sprite);
 
-            if (entity.type.type == "monster")
-                if (entity.x < 100) {
-                    entity.ChangeToState(GameTypes.EntityState.Attacking);
-                    this.entities.splice(i, 1);
+            entity.isAttacking = false;
+            //entity.ChangeToState(GameTypes.EntityState.Walking);
+
+
+            for (var j = 0; j < this.entities.length; j++) {
+                if (j >= this.entities.length) break;
+                var e = this.entities[j];
+                if (e == null) continue;
+                if (e == entity) continue;
+
+                if (e.type.type == entity.type.type) continue;
+
+
+                var attackDistance = entity.hitboxWidth / 2 + e.hitboxWidth / 2 + 50;
+                //console.log(entity.type.Name + ", " + e.type.Name + ", " + attackDistance + ", " + getDistance(entity, e));
+                if (getDistance(entity, e) <= attackDistance) {
+                    entity.isAttacking = true;
+
+                    entity.attackTimer++;
+                    if (entity.attackTimer >= 60 / entity.attacksPerSecond) {
+                        console.log(entity.type.Name + " is attacking, " + entity.damage + ", opponent health: " + e.health);
+
+                        e.health -= entity.damage;
+
+                        entity.attackTimer = 0;
+                    }
                 }
+            }
+
+            if (entity.isAttacking && entity.toggle) {
+                entity.toggle = false;
+                console.log(entity.type.Name + " started attacking!");
+                entity.ChangeToState(GameTypes.EntityState.Attacking);
+            } else if (!entity.isAttacking && !entity.toggle) {
+                entity.toggle = true;
+                console.log(entity.type.Name + " stopped attacking!");
+                entity.ChangeToState(GameTypes.EntityState.Walking);
+            }
+
+            
+            if (entity.type.type == "monster")
+                if (entity.x < -100) {
+                    entity.sprite.kill();
+                    this.entities.splice(i, 1);
+                    this.game.global.playerScore++;
+                }
+
+            if (entity.type.type == "ai_monster")
+                if (entity.x > this.game.world.width + 20) {
+                    entity.sprite.kill();
+                    this.entities.splice(i, 1);
+                    this.game.global.aiScore++;
+                }
+
+            if (entity.health <= 0) {
+                entity.sprite.kill();
+                this.entities.splice(i, 1);
+                if (entity.type.type == "ai_monster") {
+                    this.game.global.monsterPoints += entity.type.Cost;
+                }
+            }
+            
 
             
 
@@ -62,4 +120,14 @@ function Level(game, name) {
     }
     
     this.build();   
+}
+
+function getDistance(entity1, entity2) {
+    var x1 = entity1.x + entity1.type.width / 2;
+    var y1 = entity1.y + entity1.type.height / 2;
+
+    var x2 = entity2.x + entity2.type.width / 2;
+    var y2 = entity2.y + entity2.type.height / 2;
+
+    return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
 }

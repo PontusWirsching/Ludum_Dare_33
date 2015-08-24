@@ -9,6 +9,37 @@ function Entity(x, y, type, game) {
 	this.y = y - this.height / 2 - type.yOffset;
     this.state = GameTypes.EntityState.Walking;
 
+    this.damage = type.attack;
+    this.health = type.hp;
+    this.attackTimer = 0;
+    this.attacksPerSecond = 1;
+    this.isAttacking = false;
+
+    if (type.Name == "ThunderDrake")
+    	this.attacksPerSecond = 0.3; 
+
+    this.toggle = true;
+    this.hasAttacked = false;
+
+
+    this.hitboxWidth = 0;
+    this.hitboxHeight = 0;
+
+    switch (type.Size) {
+    	case GameTypes.Sizes.Small:
+    		this.hitboxWidth = 32;
+    		this.hitboxHeight = 32;
+    		break;
+    	case GameTypes.Sizes.Medium:
+    		this.hitboxWidth = 32;
+    		this.hitboxHeight = 64;
+    		break;
+    	case GameTypes.Sizes.Large:
+    		this.hitboxWidth = 64;
+    		this.hitboxHeight = 64;
+    		break;
+    }
+
 	this.type = type;
 
 	var animFPS = 16;
@@ -27,20 +58,32 @@ function Entity(x, y, type, game) {
         this.walk = this.sprite.animations.add('walk');
         this.sprite.animations.play('walk', animFPS, true);
 	}
+
+	this.shittyOffset = 0;
     
 
     this.ChangeToState = function(state){
         this.sprite.kill();
+        this.walk.destroy();
         this.state = state;
         switch(this.state){
             case GameTypes.EntityState.Walking:
+
+            	this.shittyOffset = 0;
+
                 this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
                 this.walk = this.sprite.animations.add('walk');
                 this.sprite.animations.play('walk', animFPS, true);
+                break;
             case GameTypes.EntityState.Attacking:
+
+            	if (this.type.Name == "ElvenArcher")
+            		this.shittyOffset = -(300 - 40);
+
                 this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Attack');
                 this.walk = this.sprite.animations.add('attack');
                 this.sprite.animations.play('attack', animFPS, true);
+                break;
         } 
         this.sprite.smoothed = false;
     }
@@ -51,8 +94,12 @@ function Entity(x, y, type, game) {
     this.timer = 0;
 
 	this.update = function() {
+
+		
+
+
 		if (this.type.Faction == GameTypes.Faction.Player && this.state == GameTypes.EntityState.Walking) {
-			this.x -= this.type.MovementSpeed;
+			if (!this.isAttacking) this.x -= this.type.MovementSpeed;
 		}
 		if (this.type.Faction == GameTypes.Faction.Enemy && this.state == GameTypes.EntityState.Walking) {
 			
@@ -64,16 +111,16 @@ function Entity(x, y, type, game) {
 						this.timer = 0;
 					}
 				} else {
-					this.x += this.type.MovementSpeed;
+					if (!this.isAttacking) this.x += this.type.MovementSpeed;
 				}
 
 			} else {
-				this.x += this.type.MovementSpeed;
+				if (!this.isAttacking) this.x += this.type.MovementSpeed;
 			}
 
 		}
 
-		this.sprite.x = Math.floor(this.x);
+		this.sprite.x = Math.floor(this.x) + this.shittyOffset;
 		this.sprite.y = Math.floor(this.y);
 	}
 

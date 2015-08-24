@@ -53,6 +53,7 @@ function preload() {
 
     /* AI Units loading: */
     game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
+    game.load.spritesheet('ElvenArcher_Attack', 'assets/Entities/ElvenArcher_Attack.png', 601, 81);
 
     game.load.spritesheet('DwarvenKnight_Walk', 'assets/Entities/DwarvenKnight_Walk.png', 81, 81);
 
@@ -82,7 +83,7 @@ function create() {
     addLevel(this.level_01 = new Level(game, "level_01"));
     currentPlayerUnitSelected = -1;
     currentlySelectedLane = 1;
-    monsterPoints = 100;
+    
     
     setCurrentLevel("level_01");
     gui = game.add.sprite(0, 0, 'gui');
@@ -92,6 +93,10 @@ function create() {
     playerUnitOverlayLocations = GetPlayerUnitOverlayLocations();
     
     game.gui = game.add.group();
+    game.global = {};
+    game.global.playerScore = 0;
+    game.global.aiScore = 0;
+    game.global.monsterPoints = 500;
 
 
     DrawOverlayLocation();
@@ -220,7 +225,7 @@ function update() {
 
         
         var type = 0;
-        var x = game.world.width - 64;
+        var x = game.world.width;
         var y = currentLevel.lanes[currentlySelectedLane - 1] + currentLevel.laneOffset;
 
         switch(currentPlayerUnitSelected) {
@@ -248,12 +253,12 @@ function update() {
         }
        
         if(type != 0){
-            if(type.Cost <= monsterPoints){
+            if(type.Cost <= game.global.monsterPoints){
 
                 console.log("Spawning Entity: " + type.Name + ", in lane: " + currentlySelectedLane);
 
                 currentLevel.addEntity(new Entity(x, y, type, game));
-                monsterPoints -= type.Cost;
+                game.global.monsterPoints -= type.Cost;
             }
             
             currentPlayerUnitSelected = GameTypes.PlayerUnits.NotSelected;
@@ -273,6 +278,12 @@ function update() {
     
     DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
     DrawLaneOverlayLocations(currentlySelectedLane);
+
+    for (var i = 0; i < currentLevel.entities.length; i++) {
+        var e = currentLevel.entities[i];
+        DrawRectangle(e.x + e.type.width / 2 - e.hitboxWidth / 2, e.y + e.type.height / 2 - e.hitboxHeight / 2, e.hitboxWidth, e.hitboxHeight);
+    }
+
 }
 
 function GetPlayerUnitCost(playerUnit){
@@ -343,7 +354,10 @@ function DrawCurrentSelectionBoxForPlayerUnit(currentlySelected){
 }
 
 function render(){
-    game.debug.text("Monster Points : " + monsterPoints, 550, 16, "#00ff00");
+    game.debug.text("Monster Points : " + game.global.monsterPoints, 550, 16, "#00ff00");
+    game.debug.text("Player Score : " + game.global.playerScore, 550, 32, "#00ff00");
+    game.debug.text("Computer Score : " + game.global.aiScore, 550, 48, "#00ff00");
+
 }
 
 
