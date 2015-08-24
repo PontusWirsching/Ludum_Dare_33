@@ -63,6 +63,18 @@ function preload() {
     game.load.spritesheet('TimberMech_Walk', 'assets/Entities/TimberMech_Walk.png', 301, 301);
 
 
+    /* GUI stuff */
+    game.load.image('port_Goblin', 'assets/Portraits/Bruisa\'h.png');
+    game.load.image('port_Cannoneer', 'assets/Portraits/Cannoneer.png');
+    game.load.image('port_ThunderDrake', 'assets/Portraits/Drake.png');
+    game.load.image('port_ElvenArcher', 'assets/Portraits/Elf.png');
+    game.load.image('port_DwarvenKnight', 'assets/Portraits/Knight.png');
+    game.load.image('port_RockQuarry', 'assets/Portraits/Ludum.png');
+    game.load.image('port_BlazitMage', 'assets/Portraits/Mage.png');
+    game.load.image('port_TimberMech', 'assets/Portraits/Mech.png');
+    game.load.image('port_MossGolem', 'assets/Portraits/Moss.png');
+    game.load.image('port_OrcSpearThrower', 'assets/Portraits/Orc.png');
+    game.load.image('port_KoboldRunner', 'assets/Portraits/Runna\'h.png');
 
 }
 

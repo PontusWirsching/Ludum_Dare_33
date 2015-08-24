@@ -2,7 +2,7 @@ AIUnits = {
     ElvenArcher : {
         type: "ai_monster",
         Name: "ElvenArcher",
-        Cost: 10,
+        Cost: 15,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Enemy,
         MovementSpeed: GameTypes.Speeds.Medium,
@@ -14,12 +14,14 @@ AIUnits = {
         width: 32,
         height: 32,
         xOffset: 0,
-        yOffset: 20
+        yOffset: 20,
+        hp: 20,
+        attack: 5
     },
     DwarvenKnight : {
         type: "ai_monster",
         Name: "DwarvenKnight",
-        Cost: 10,
+        Cost: 25,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Enemy,
         MovementSpeed: GameTypes.Speeds.Medium,
@@ -31,12 +33,14 @@ AIUnits = {
         width: 32,
         height: 32,
         xOffset: 0,
-        yOffset: 20
+        yOffset: 20,
+        hp: 40,
+        attack: 15
     },
     Cannoneer : {
         type: "ai_monster",
         Name: "Cannoneer",
-        Cost: 10,
+        Cost: 40,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Enemy,
         MovementSpeed: GameTypes.Speeds.Medium,
@@ -48,12 +52,14 @@ AIUnits = {
         width: 32,
         height: 32,
         xOffset: 0,
-        yOffset: -12
+        yOffset: -12,
+        hp: 50,
+        attack: 20
     },
     BlazitMage : {
         type: "ai_monster",
         Name: "BlazitMage",
-        Cost: 10,
+        Cost: 20,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Enemy,
         MovementSpeed: GameTypes.Speeds.Medium,
@@ -65,12 +71,14 @@ AIUnits = {
         width: 32,
         height: 32,
         xOffset: 0,
-        yOffset: -12
+        yOffset: -12,
+        hp: 30,
+        attack: 15
     },
     TimberMech : {
         type: "ai_monster",
         Name: "TimberMech",
-        Cost: 10,
+        Cost: 80,
         Size: GameTypes.Sizes.Small,
         Faction: GameTypes.Faction.Enemy,
         MovementSpeed: GameTypes.Speeds.Slow,
@@ -82,7 +90,9 @@ AIUnits = {
         width: 64,
         height: 64,
         xOffset: 0,
-        yOffset: 0
+        yOffset: 0,
+        hp: 80,
+        attack: 30
     }
     
 };
