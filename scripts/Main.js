@@ -177,52 +177,50 @@ function update() {
             game.ai.update(currentLevel);
         }
 
-        timer += 15;
-        if (timer >= 60) {
-            var type = 0;
-            var x = game.world.width - 64;
-            var y = currentLevel.lanes[currentlySelectedLane - 1] + currentLevel.laneOffset;
+        
+        var type = 0;
+        var x = game.world.width - 64;
+        var y = currentLevel.lanes[currentlySelectedLane - 1] + currentLevel.laneOffset;
 
-            switch(currentPlayerUnitSelected) {
-                case GameTypes.PlayerUnits.Goblin:
-                    type = PlayerUnits.Goblin;
-                    break;
-                case GameTypes.PlayerUnits.MossGolem:
-                    type = PlayerUnits.MossGolem;
-                    break;
-                case GameTypes.PlayerUnits.RockQuarry:
-                    type = PlayerUnits.RockQuarry;
-                    break;
-                case GameTypes.PlayerUnits.OrcSpearThrower:
-                    type = PlayerUnits.OrcSpearThrower;
-                    break;
-                case GameTypes.PlayerUnits.KoboldSap:
-                    type = PlayerUnits.KoboldSap;
-                    break;
-                case GameTypes.PlayerUnits.KoboldRunner:
-                    type = PlayerUnits.KoboldRunner;
-                    break;
-            }
-           
-            if(type != 0){
-                if(type.Cost <= monsterPoints){
-
-                    console.log("Spawning Entity: " + type.Name + ", in lane: " + currentlySelectedLane);
-
-                    currentLevel.addEntity(new Entity(x, y, type, game));
-                    monsterPoints -= type.Cost;
-                }
-                
-                currentPlayerUnitSelected = GameTypes.PlayerUnits.NotSelected;
-                DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
-            }
-            
-            
-
-            game.world.bringToTop(currentLevel.tree_tops);
-            
-            timer = 0;
+        switch(currentPlayerUnitSelected) {
+            case GameTypes.PlayerUnits.Goblin:
+                type = PlayerUnits.Goblin;
+                break;
+            case GameTypes.PlayerUnits.MossGolem:
+                type = PlayerUnits.MossGolem;
+                break;
+            case GameTypes.PlayerUnits.RockQuarry:
+                type = PlayerUnits.RockQuarry;
+                break;
+            case GameTypes.PlayerUnits.OrcSpearThrower:
+                type = PlayerUnits.OrcSpearThrower;
+                break;
+            case GameTypes.PlayerUnits.KoboldSap:
+                type = PlayerUnits.KoboldSap;
+                break;
+            case GameTypes.PlayerUnits.KoboldRunner:
+                type = PlayerUnits.KoboldRunner;
+                break;
         }
+       
+        if(type != 0){
+            if(type.Cost <= monsterPoints){
+
+                console.log("Spawning Entity: " + type.Name + ", in lane: " + currentlySelectedLane);
+
+                currentLevel.addEntity(new Entity(x, y, type, game));
+                monsterPoints -= type.Cost;
+            }
+            
+            currentPlayerUnitSelected = GameTypes.PlayerUnits.NotSelected;
+            DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
+        }
+        
+        
+
+        game.world.bringToTop(currentLevel.tree_tops);
+        
+            
 
         currentLevel.update();
     }
