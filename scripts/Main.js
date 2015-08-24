@@ -1,4 +1,4 @@
-var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(768, 576, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
 var levels = []; // Array of levels.
 var currentLevel; // The level to currently be updated.
@@ -56,6 +56,7 @@ function create() {
     addLevel(this.level_01 = new Level(game, "level_01"));
     currentPlayerUnitSelected = -1;
     currentlySelectedLane = 0;
+    monsterPoints = 100;
     
     setCurrentLevel("level_01");
     gui = game.add.sprite(0, 0, 'gui');
@@ -172,10 +173,16 @@ function update() {
             }
            
             if(type != 0){
-                currentLevel.addEntity(new Entity(x, y, type, game));
+                if(type.Cost <= monsterPoints){
+                    currentLevel.addEntity(new Entity(x, y, type, game));
+                    monsterPoints -= type.Cost;
+                }
+                
                 currentPlayerUnitSelected = GameTypes.PlayerUnits.NotSelected;
                 DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
             }
+            
+            
 
             game.world.bringToTop(currentLevel.tree_tops);
             
@@ -187,6 +194,23 @@ function update() {
     
     DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
     DrawLaneOverlayLocations(currentlySelectedLane);
+}
+
+function GetPlayerUnitCost(playerUnit){
+    switch(playerUnit){
+        case GameTypes.PlayerUnits.Goblin:
+            return PlayerUnits.Goblin.Cost;
+        case GameTypes.PlayerUnits.MossGolem:
+            return PlayerUnits.MossGolem.Cost;
+        case GameTypes.PlayerUnits.RockQuarry:
+            return PlayerUnits.RockQuarry.Cost;
+        case GameTypes.PlayerUnits.OrcSpearThrower:
+            return PlayerUnits.OrcSpearThrower.Cost;
+        case GameTypes.PlayerUnits.KoboldSap:
+            return PlayerUnits.KoboldSap.Cost;
+        case GameTypes.PlayerUnits.KoboldRunner:
+            return PlayerUnits.KoboldRunner.Cost;
+    }
 }
 
 function GetCurrentSelectedPlayerUnit(currentlySelected){    
@@ -237,6 +261,12 @@ function DrawCurrentSelectionBoxForPlayerUnit(currentlySelected){
     }
 }
 
+function render(){
+    game.debug.text("Monster Points : " + monsterPoints, 550, 16, "#00ff00");
+}
+
+
+//Utility Methods and class below
 function DrawRectangle(x, y, w, h){
     overlay.ctx.beginPath();
     overlay.ctx.rect(x, y, w, h);
