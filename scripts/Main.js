@@ -39,37 +39,38 @@ function preload() {
 
     /* AI Units loading: */
     game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
-
-
-
-
-    Resources.Load(game);
 }
 
 function create() {
-    
-    
     addLevel(this.level_01 = new Level(game, "level_01"));
-
-
-    entityParser = new GameEntityParser();
-    entityParser.BuildPlayerEntityMenu(game);
     currentlySelected = 0;
+    
+    setCurrentLevel("level_01");
+    gui = game.add.sprite(0, 0, 'gui');
     
     overlay = game.add.bitmapData(game.width, game.height);
     game.add.sprite(0, 0, overlay);
     overlayLocations = GetOverlayLocations();
+    DrawOverlayLocation();
+    
+    game.ai = new AI(game);
+}
 
-
-    setCurrentLevel("level_01");
+function DrawOverlayLocation(){
+    game.add.sprite(680, 70, 'KoboldRunner_Walk', 0);
+    game.add.sprite(710, 70, 'KoboldSap_Walk', 0);
+    game.add.sprite(676, 105, 'Goblin_Walk', 0);
+    game.add.sprite(710, 105, 'OrcSpearThrower_Walk', 0);
+    game.add.sprite(620, 85, 'MossGolem_Walk', 0);
+    game.add.sprite(639, 155, 'RockQuarry_Walk', 0);
 }
 
 
 function GetOverlayLocations(){
     var overlayLocations = [
         new OverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
-        new OverlayLocation(700, 155, 32, 53, GameTypes.PlayerUnits.MossGolem),
-        new OverlayLocation(685, 205, 64, 35, GameTypes.PlayerUnits.RockQuarry),
+        new OverlayLocation(700, 155, 32, 68, GameTypes.PlayerUnits.MossGolem),
+        new OverlayLocation(705, 223, 58, 35, GameTypes.PlayerUnits.RockQuarry),
         new OverlayLocation(732, 125, 32, 32, GameTypes.PlayerUnits.OrcSpearThrower),
         new OverlayLocation(732, 95, 32, 32, GameTypes.PlayerUnits.KoboldSap),
         new OverlayLocation(700, 95, 32, 32, GameTypes.PlayerUnits.KoboldRunner),
@@ -77,27 +78,11 @@ function GetOverlayLocations(){
     
     
     return overlayLocations;
-    gui = game.add.sprite(0, 0, 'gui');
-
-    game.ai = new AI(game);
-
 }
 
 var timer = 0;
 
 function update() { 
-    for(var i=0;i<overlayLocations.length;i++){
-        if(game.input.activePointer.isDown){
-            if(MouseOverlapsLocation(overlayLocations[i],
-                                     game.input.mouse.input.x,
-                                     game.input.mouse.input.y)){
-                currentlySelected = overlayLocations[i].unit;
-            }
-        }
-    }
-    
-    SetCurrentSelectionBox(currentlySelected);
-    
     if (currentLevel != null){
 
 
@@ -107,11 +92,9 @@ function update() {
 
         timer += 1;
         if (timer >= 60) {
-
-
             var type = PlayerUnits.Goblin;
             var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
-            var x = game.world.width;
+            var x = game.world.width - 64;
             var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
            
             var r = currentlySelected; //Math.round(Math.random() * 5);
@@ -141,16 +124,24 @@ function update() {
             currentLevel.addEntity(new Entity(x, y, type, game));
 
             game.world.bringToTop(currentLevel.tree_tops);
-            game.world.bringToTop(gui);
-
+            
             timer = 0;
         }
 
         currentLevel.update();
     }
+    
+    for(var i=0;i<overlayLocations.length;i++){
+        if(game.input.activePointer.isDown){
+            if(MouseOverlapsLocation(overlayLocations[i],
+                                     game.input.mouse.input.x,
+                                     game.input.mouse.input.y)){
+                currentlySelected = overlayLocations[i].unit;
+            }
+        }
+    }
 
-
-
+    SetCurrentSelectionBox(currentlySelected);
 }
 
 function SetCurrentSelectionBox(currentlySelected){
@@ -187,5 +178,5 @@ function OverlayLocation(x, y, w, h, unit){
 }
 
 function render(){
-    game.debug.text("currentPlayerSelection : " + entityParser.currentlySelected, 2, 32, "#00ff00");
+    //game.debug.text("currentPlayerSelection : " + entityParser.currentlySelected, 2, 32, "#00ff00");
 }
