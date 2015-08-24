@@ -17,14 +17,6 @@ function setCurrentLevel(name) {
     }
 }
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> origin/master
 function preload() {
 
 
@@ -72,7 +64,7 @@ function create() {
     setCurrentLevel("level_01");
 }
 
-<<<<<<< HEAD
+
 function GetOverlayLocations(){
     var overlayLocations = [
         new OverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
@@ -85,14 +77,10 @@ function GetOverlayLocations(){
     
     
     return overlayLocations;
-=======
     gui = game.add.sprite(0, 0, 'gui');
 
     game.ai = new AI(game);
 
-
-
->>>>>>> origin/master
 }
 
 var timer = 0;
