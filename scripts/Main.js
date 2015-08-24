@@ -17,19 +17,39 @@ function setCurrentLevel(name) {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> origin/master
 function preload() {
-    game.load.image('grassTile', 'assets/GrassTile.png');
+
+
+    game.load.image('gui', 'assets/GUI/GUI.png');
+
+
     game.load.image('level_01', 'assets/Level1.png');
+    game.load.image('level_01_tree_tops', 'assets/Tree_Tops.png');
+    game.load.image('level_01_tree_bottoms', 'assets/Tree_Bottoms.png');
 
-    game.load.spritesheet('KoboldRunner_Walk', 'assets/KoboldRunner_Walk.png', 81, 81);
-    game.load.spritesheet('KoboldSap_Walk', 'assets/KoboldSap_Walk.png', 81, 81);
-    game.load.spritesheet('Goblin_Walk', 'assets/Goblin_Walk.png', 81, 81);
-    game.load.spritesheet('OrcSpearThrower_Walk', 'assets/OrcSpearThrower_Walk.png', 81, 81);
-    game.load.spritesheet('MossGolem_Walk', 'assets/MossGolem_Walk.png', 201, 201);
-    game.load.spritesheet('RockQuarry_Walk', 'assets/RockQuarry_Walk.png', 201, 201);
+    game.load.image('level_01_rocks', 'assets/Rocks.png');
 
-    game.pontus = {};
-    game.pontus.entityGroup = game.add.group();
+    game.load.spritesheet('KoboldRunner_Walk', 'assets/Entities/KoboldRunner_Walk.png', 81, 81);
+    game.load.spritesheet('KoboldSap_Walk', 'assets/Entities/KoboldSap_Walk.png', 81, 81);
+    game.load.spritesheet('Goblin_Walk', 'assets/Entities/Goblin_Walk.png', 81, 81);
+    game.load.spritesheet('OrcSpearThrower_Walk', 'assets/Entities/OrcSpearThrower_Walk.png', 81, 81);
+    game.load.spritesheet('MossGolem_Walk', 'assets/Entities/MossGolem_Walk.png', 201, 201);
+    game.load.spritesheet('RockQuarry_Walk', 'assets/Entities/RockQuarry_Walk.png', 201, 201);
+
+
+    /* AI Units loading: */
+    game.load.spritesheet('ElvenArcher_Walk', 'assets/Entities/ElvenArcher_Walk.png', 81, 81);
+
+
+
 
     Resources.Load(game);
 }
@@ -37,8 +57,8 @@ function preload() {
 function create() {
     
     
-    addLevel(new Level(game, "level_01"));
-    
+    addLevel(this.level_01 = new Level(game, "level_01"));
+
 
     entityParser = new GameEntityParser();
     entityParser.BuildPlayerEntityMenu(game);
@@ -48,9 +68,11 @@ function create() {
     game.add.sprite(0, 0, overlay);
     overlayLocations = GetOverlayLocations();
 
+
     setCurrentLevel("level_01");
 }
 
+<<<<<<< HEAD
 function GetOverlayLocations(){
     var overlayLocations = [
         new OverlayLocation(700, 125, 32, 32, GameTypes.PlayerUnits.Goblin),
@@ -63,6 +85,14 @@ function GetOverlayLocations(){
     
     
     return overlayLocations;
+=======
+    gui = game.add.sprite(0, 0, 'gui');
+
+    game.ai = new AI(game);
+
+
+
+>>>>>>> origin/master
 }
 
 var timer = 0;
@@ -82,13 +112,18 @@ function update() {
     
     if (currentLevel != null){
 
+
+        if (game.ai != null) {
+            game.ai.update(currentLevel);
+        }
+
         timer += 1;
         if (timer >= 60) {
 
 
             var type = PlayerUnits.Goblin;
             var lane = Math.round(Math.random() * (currentLevel.lanes.length - 1));
-            var x = 800;
+            var x = game.world.width;
             var y = currentLevel.lanes[lane - 1] + currentLevel.laneOffset;
            
             var r = currentlySelected; //Math.round(Math.random() * 5);
@@ -116,13 +151,18 @@ function update() {
            
 
             currentLevel.addEntity(new Entity(x, y, type, game));
-            game.world.bringToTop(game.pontus.entityGroup);
+
+            game.world.bringToTop(currentLevel.tree_tops);
+            game.world.bringToTop(gui);
 
             timer = 0;
         }
 
         currentLevel.update();
     }
+
+
+
 }
 
 function SetCurrentSelectionBox(currentlySelected){

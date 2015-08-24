@@ -14,19 +14,31 @@ function Entity(x, y, type, game) {
 
 	if (type.Name == "MossGolem")
 		animFPS = 8;
+	if (type.Name == "OrcSpearThrower")
+		animFPS = 24;
+	if (type.Name == "ElvenArcher")
+		animFPS = 24
 
-	this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
-	this.walk = this.sprite.animations.add('walk');
-	this.sprite.animations.play('walk', animFPS, true);
-	game.pontus.entityGroup.add(this.sprite);
+	if (this.sprite == null) {
+		this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
+		this.walk = this.sprite.animations.add('walk');
+		this.sprite.animations.play('walk', animFPS, true);
+	}
 
-	//this.sprite = game.add.sprite(this.x, this.y, type.Name, "Walk_000.png");
-	
+
 
 	
 
 
 	this.update = function() {
+
+		if (this.type.Faction == GameTypes.Faction.Player) {
+			this.x -= this.type.MovementSpeed;
+		}
+		if (this.type.Faction == GameTypes.Faction.Enemy) {
+			this.x += this.type.MovementSpeed;
+		}
+
 		this.sprite.x = Math.floor(this.x);
 		this.sprite.y = Math.floor(this.y);
 	}

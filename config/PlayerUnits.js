@@ -1,5 +1,6 @@
 PlayerUnits = {
     KoboldRunner : {
+        type: "monster",
         Name: "KoboldRunner",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
@@ -16,6 +17,7 @@ PlayerUnits = {
         yOffset: 0
     },
     KoboldSap : {
+        type: "monster",
         Name: "KoboldSap",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
@@ -32,6 +34,7 @@ PlayerUnits = {
         yOffset: 0
     },
     Goblin : {
+        type: "monster",
         Name: "Goblin",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
@@ -48,6 +51,7 @@ PlayerUnits = {
         yOffset: 0
     },
     OrcSpearThrower : {
+        type: "monster",
         Name: "OrcSpearThrower",
         Cost: 10,
         Size: GameTypes.Sizes.Small,
@@ -64,6 +68,7 @@ PlayerUnits = {
         yOffset: 0
     },
     MossGolem : {
+        type: "monster",
         Name: "MossGolem",
         Cost: 10,
         Size: GameTypes.Sizes.Medium,
@@ -77,9 +82,10 @@ PlayerUnits = {
         width: 201,
         height: 201,
         xOffset: 0,
-        yOffset: -40
+        yOffset: -43
     },
     RockQuarry : {
+        type: "monster",
         Name: "RockQuarry",
         Cost: 10,
         Size: GameTypes.Sizes.Large,
