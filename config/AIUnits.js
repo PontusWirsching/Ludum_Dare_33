@@ -15,8 +15,9 @@ AIUnits = {
         height: 81,
         xOffset: 0,
         yOffset: 0,
-        hp: 20,
-        attack: 5
+        hp: 1,//20,
+        attack: 2,
+        attackRange: 300
     },
     DwarvenKnight : {
         type: "ai_monster",
@@ -34,8 +35,9 @@ AIUnits = {
         height: 81,
         xOffset: 0,
         yOffset: 0,
-        hp: 40,
-        attack: 15
+        hp: 1,//40,
+        attack: 15,
+        attackRange: 30
     },
     Cannoneer : {
         type: "ai_monster",
@@ -53,8 +55,9 @@ AIUnits = {
         height: 161,
         xOffset: 0,
         yOffset: -12,
-        hp: 50,
-        attack: 20
+        hp: 1,//50,
+        attack: 20,
+        attackRange: 30
     },
     BlazitMage : {
         type: "ai_monster",
@@ -73,7 +76,8 @@ AIUnits = {
         xOffset: 0,
         yOffset: -12,
         hp: 30,
-        attack: 15
+        attack: 15,
+        attackRange: 130
     },
     TimberMech : {
         type: "ai_monster",
@@ -91,8 +95,9 @@ AIUnits = {
         height: 301,
         xOffset: 0,
         yOffset: 10,
-        hp: 80,
-        attack: 30
+        hp: 1,//80,
+        attack: 30,
+        attackRange: 128
     }
     
 };

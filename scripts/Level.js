@@ -64,9 +64,9 @@ function Level(game, name) {
                 if (e.type.type == entity.type.type) continue;
 
 
-                var attackDistance = entity.hitboxWidth / 2 + e.hitboxWidth / 2 + 50;
+                var attackDistance = entity.type.attackRange; //entity.hitboxWidth / 2 + e.hitboxWidth / 2 + 50;
                 //console.log(entity.type.Name + ", " + e.type.Name + ", " + attackDistance + ", " + getDistance(entity, e));
-                if (getDistance(entity, e) <= attackDistance) {
+                if (getDistance(entity, e) <= attackDistance && entity.lane == e.lane) {
                     entity.isAttacking = true;
 
                     entity.attackTimer++;
@@ -99,7 +99,7 @@ function Level(game, name) {
                 }
 
             if (entity.type.type == "ai_monster")
-                if (entity.x > this.game.world.width + 20) {
+                if ((entity.x - entity.width / 2) > this.game.world.width) {
                     entity.sprite.kill();
                     this.entities.splice(i, 1);
                     this.game.global.aiScore++;

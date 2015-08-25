@@ -64,15 +64,19 @@ function preload() {
     game.load.spritesheet('ElvenArcher_Death', 'assets/Entities/ElvenArcher_Death.png', 81, 81);
 
     game.load.spritesheet('DwarvenKnight_Walk', 'assets/Entities/DwarvenKnight_Walk.png', 81, 81);
+    game.load.spritesheet('DwarvenKnight_Attack', 'assets/Entities/DwarvenKnight_Attack.png', 81, 81);
     game.load.spritesheet('DwarvenKnight_Death', 'assets/Entities/DwarvenKnight_Death.png', 81, 81);
 
     game.load.spritesheet('Cannoneer_Walk', 'assets/Entities/Cannoneer_Walk.png', 161, 161);
+    game.load.spritesheet('Cannoneer_Attack', 'assets/Entities/Cannoneer_Attack.png', 801, 801);
     game.load.spritesheet('Cannoneer_Death', 'assets/Entities/Cannoneer_Death.png', 161, 161);
 
     game.load.spritesheet('BlazitMage_Walk', 'assets/Entities/BlazitMage_Walk.png', 151, 151);
+    game.load.spritesheet('BlazitMage_Attack', 'assets/Entities/BlazitMage_Attack.png', 301, 301);
     game.load.spritesheet('BlazitMage_Death', 'assets/Entities/BlazitMage_Death.png', 151, 151);
 
     game.load.spritesheet('TimberMech_Walk', 'assets/Entities/TimberMech_Walk.png', 301, 301);
+    game.load.spritesheet('TimberMech_Attack', 'assets/Entities/TimberMech_Attack.png', 301, 301);
     game.load.spritesheet('TimberMech_Death', 'assets/Entities/TimberMech_Death.png', 301, 301);
 
 
@@ -109,6 +113,7 @@ function create() {
     game.global.playerScore = 0;
     game.global.aiScore = 0;
     game.global.monsterPoints = 500;
+    game.global.isGameOver = false;
 
 
     DrawOverlayLocation();
@@ -165,6 +170,12 @@ var timer = 0;
 var spawnLimits = [];
 
 function update() {
+    if(game.global.aiScore == 5 || game.global.isGameOver){
+        game.global.isGameOver = true;
+        return;
+    }
+    
+    
     overlay.clear();
     
     if(game.input.activePointer.isDown && spawnLimits[6]){
@@ -238,7 +249,7 @@ function update() {
 
                 console.log("Spawning Entity: " + type.Name + ", in lane: " + currentlySelectedLane);
 
-                currentLevel.addEntity(new Entity(x, y, type, game));
+                currentLevel.addEntity(new Entity(x, y, type, game, currentlySelectedLane));
                 game.global.monsterPoints -= type.Cost;
             }
             
@@ -260,10 +271,10 @@ function update() {
     DrawCurrentSelectionBoxForPlayerUnit(currentPlayerUnitSelected);
     DrawLaneOverlayLocations(currentlySelectedLane);
 
-    for (var i = 0; i < currentLevel.entities.length; i++) {
-        var e = currentLevel.entities[i];
-        DrawRectangle(e.x + e.type.width / 2 - e.hitboxWidth / 2, e.y + e.type.height / 2 - e.hitboxHeight / 2, e.hitboxWidth, e.hitboxHeight);
-    }
+//    for (var i = 0; i < currentLevel.entities.length; i++) {
+//        var e = currentLevel.entities[i];
+//        DrawRectangle(e.x + e.type.width / 2 - e.hitboxWidth / 2, e.y + e.type.height / 2 - e.hitboxHeight / 2, e.hitboxWidth, e.hitboxHeight);
+//    }
 
 }
 
@@ -338,7 +349,12 @@ function render(){
     game.debug.text("Monster Points : " + game.global.monsterPoints, 550, 16, "#00ff00");
     game.debug.text("Player Score : " + game.global.playerScore, 550, 32, "#00ff00");
     game.debug.text("Computer Score : " + game.global.aiScore, 550, 48, "#00ff00");
-
+    
+    if(game.global.isGameOver){
+        game.debug.text("Game Over", 350, 148, "#00ff00");
+        game.debug.text("Your score was " + game.global.playerScore, 350, 170, "#00ff00");
+        game.debug.text("Please refresh the game to reload", 250, 190, "#00ff00");
+    }
 }
 
 

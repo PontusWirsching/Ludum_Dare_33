@@ -1,7 +1,7 @@
 
 /* This will be entities that are in-game. */
 /* The 'type' is an object from PlayerUnits. */
-function Entity(x, y, type, game) {
+function Entity(x, y, type, game, lane) {
 	
 	this.width = type.width;
 	this.height = type.height;
@@ -14,6 +14,7 @@ function Entity(x, y, type, game) {
     this.attackTimer = 0;
     this.attacksPerSecond = 1;
     this.isAttacking = false;
+    this.lane = lane;
 
     if (type.Name == "ThunderDrake")
     	this.attacksPerSecond = 0.3; 
@@ -60,6 +61,7 @@ function Entity(x, y, type, game) {
 	}
 
 	this.shittyOffset = 0;
+    this.shittyOffsetTheYVersion = 0;
     
 
     this.ChangeToState = function(state){
@@ -70,6 +72,7 @@ function Entity(x, y, type, game) {
             case GameTypes.EntityState.Walking:
 
             	this.shittyOffset = 0;
+                this.shittyOffsetTheYVersion = 0;
 
                 this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Walk');
                 this.walk = this.sprite.animations.add('walk');
@@ -79,6 +82,11 @@ function Entity(x, y, type, game) {
 
             	if (this.type.Name == "ElvenArcher")
             		this.shittyOffset = -(300 - 40);
+                
+                if (this.type.Name == "BlazitMage"){
+            		this.shittyOffset = -70;
+                    this.shittyOffsetTheYVersion = -78;
+                }
 
                 this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Attack');
                 this.walk = this.sprite.animations.add('attack');
@@ -89,6 +97,8 @@ function Entity(x, y, type, game) {
 
             	if (this.type.Name == "ElvenArcher")
             		this.shittyOffset = -(300 - 40);
+                
+                this.shittyOffsetTheYVersion = 0;
 
                 this.sprite = game.add.sprite(this.x, this.y, type.Name + '_Death');
                 this.walk = this.sprite.animations.add('death');
@@ -130,7 +140,7 @@ function Entity(x, y, type, game) {
 		}
 
 		this.sprite.x = Math.floor(this.x) + this.shittyOffset;
-		this.sprite.y = Math.floor(this.y);
+		this.sprite.y = Math.floor(this.y) + this.shittyOffsetTheYVersion;
 	}
 
 

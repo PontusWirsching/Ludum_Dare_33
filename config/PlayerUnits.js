@@ -16,7 +16,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 0,
         hp: 20,
-        attack: 5
+        attack: 5,
+        attackRange: 30
     },
     KoboldSap : {
         type: "monster",
@@ -35,7 +36,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 0,
         hp: 30,
-        attack: 10
+        attack: 10,
+        attackRange: 30
     },
     Goblin : {
         type: "monster",
@@ -54,7 +56,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 0,
         hp: 40,
-        attack: 7
+        attack: 7,
+        attackRange: 30
     },
     OrcSpearThrower : {
         type: "monster",
@@ -73,7 +76,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 0,
         hp: 40,
-        attack: 7
+        attack: 7,
+        attackRange: 30
     },
     MossGolem : {
         type: "monster",
@@ -92,7 +96,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 21,
         hp: 60,
-        attack: 15
+        attack: 15,
+        attackRange: 70
     },
     RockQuarry : {
         type: "monster",
@@ -111,7 +116,8 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: -14,
         hp: 100,
-        attack: 20
+        attack: 20,
+        attackRange: 30
     },
     ThunderDrake : {
         type: "monster",
@@ -130,6 +136,7 @@ PlayerUnits = {
         xOffset: 0,
         yOffset: 0,
         hp: 80,
-        attack: 40
+        attack: 40,
+        attackRange: 90
     }
 };

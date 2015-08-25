@@ -13,7 +13,7 @@ function AI(game, currentLevel) {
             var x = currentLevel.aiSpawningXPos;
             var y = currentLevel.lanes[lane - 2] + currentLevel.laneOffset;
             var unit = AIUnits.ElvenArcher;
-            var r = Math.floor(Math.random() * 5);
+            var r = Math.floor(Math.random() * 4);
 
             switch (r) {
             	case 0:
@@ -22,21 +22,20 @@ function AI(game, currentLevel) {
             	case 1:
             		unit = AIUnits.DwarvenKnight;
             		break;
+            	
             	case 2:
-            		unit = AIUnits.Cannoneer;
-            		break;
-            	case 3:
             		unit = AIUnits.BlazitMage;
             		break;
-            	case 4:
+            	case 3:
             		unit = AIUnits.TimberMech;
             		break;
+                    
+//                case 2:
+//            		unit = AIUnits.Cannoneer;
+//            		break;
             }
 
-            unit = AIUnits.ElvenArcher;
-
-
-			currentLevel.addEntity(new Entity(x, y, unit, this.game));
+			currentLevel.addEntity(new Entity(x, y, unit, this.game, lane - 1));
 
 			this.timer = 0;
 		}
